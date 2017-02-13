@@ -1,0 +1,634 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		07477D7A1E523964009DC76E /* DonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07477D791E523964009DC76E /* DonateViewController.swift */; };
+		074B8CE61E492081000B76BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8CE51E492081000B76BA /* AppDelegate.swift */; };
+		074B8CEB1E492081000B76BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 074B8CE91E492081000B76BA /* Main.storyboard */; };
+		074B8CED1E492081000B76BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 074B8CEC1E492081000B76BA /* Assets.xcassets */; };
+		074B8CF01E492081000B76BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 074B8CEE1E492081000B76BA /* LaunchScreen.storyboard */; };
+		074B8CFB1E492081000B76BA /* Pledge_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8CFA1E492081000B76BA /* Pledge_AppTests.swift */; };
+		074B8D061E492081000B76BA /* Pledge_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8D051E492081000B76BA /* Pledge_AppUITests.swift */; };
+		074B8D181E4927FB000B76BA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8D171E4927FB000B76BA /* Event.swift */; };
+		074B8D1A1E492806000B76BA /* EventPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8D191E492806000B76BA /* EventPost.swift */; };
+		074B8D1C1E49281B000B76BA /* Charity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8D1B1E49281B000B76BA /* Charity.swift */; };
+		074B8D1E1E492828000B76BA /* CharityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8D1D1E492828000B76BA /* CharityAPI.swift */; };
+		074B8D201E492847000B76BA /* PledgeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8D1F1E492847000B76BA /* PledgeAPI.swift */; };
+		074B8D221E4928A8000B76BA /* Individual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8D211E4928A8000B76BA /* Individual.swift */; };
+		074B8D241E492907000B76BA /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8D231E492907000B76BA /* Organization.swift */; };
+		074B8F051E4A4E85000B76BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8F041E4A4E85000B76BA /* LoginViewController.swift */; };
+		074B8F071E4A4EF8000B76BA /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B8F061E4A4EF8000B76BA /* RegisterViewController.swift */; };
+		074B959A1E4B98AD000B76BA /* IndividualPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B95991E4B98AD000B76BA /* IndividualPost.swift */; };
+		074B959C1E4B98BF000B76BA /* OrganizationPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B959B1E4B98BF000B76BA /* OrganizationPost.swift */; };
+		074B959E1E4B9C66000B76BA /* CharityPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B959D1E4B9C66000B76BA /* CharityPost.swift */; };
+		074B95A21E4CB0B5000B76BA /* IndividualTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B95A11E4CB0B5000B76BA /* IndividualTests.swift */; };
+		074B95A41E4CB0DC000B76BA /* OrganizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B95A31E4CB0DC000B76BA /* OrganizationTests.swift */; };
+		074B95A61E4CB0F6000B76BA /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B95A51E4CB0F6000B76BA /* EventTests.swift */; };
+		074B95A81E4CB119000B76BA /* CharityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B95A71E4CB119000B76BA /* CharityTests.swift */; };
+		074B95E61E4CED22000B76BA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B95E51E4CED22000B76BA /* HomeViewController.swift */; };
+		074B96221E4D1003000B76BA /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B96211E4D1003000B76BA /* EventsTableViewController.swift */; };
+		074B96241E4D13EF000B76BA /* CharitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B96231E4D13EF000B76BA /* CharitiesTableViewController.swift */; };
+		074B96281E4E543F000B76BA /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074B96271E4E543F000B76BA /* EventStore.swift */; };
+		076E915C1E4FF94C00E61894 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076E915B1E4FF94C00E61894 /* EventViewController.swift */; };
+		076E915E1E5007C600E61894 /* CharityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076E915D1E5007C600E61894 /* CharityViewController.swift */; };
+		076E91621E512E6C00E61894 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076E91611E512E6C00E61894 /* AddEventViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		074B8CF71E492081000B76BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 074B8CDA1E492081000B76BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 074B8CE11E492081000B76BA;
+			remoteInfo = "Pledge App";
+		};
+		074B8D021E492081000B76BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 074B8CDA1E492081000B76BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 074B8CE11E492081000B76BA;
+			remoteInfo = "Pledge App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		07477D791E523964009DC76E /* DonateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonateViewController.swift; sourceTree = "<group>"; };
+		074B8CE21E492081000B76BA /* Pledge App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pledge App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		074B8CE51E492081000B76BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		074B8CEA1E492081000B76BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		074B8CEC1E492081000B76BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		074B8CEF1E492081000B76BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		074B8CF11E492081000B76BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		074B8CF61E492081000B76BA /* Pledge AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pledge AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		074B8CFA1E492081000B76BA /* Pledge_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pledge_AppTests.swift; sourceTree = "<group>"; };
+		074B8CFC1E492081000B76BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		074B8D011E492081000B76BA /* Pledge AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pledge AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		074B8D051E492081000B76BA /* Pledge_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pledge_AppUITests.swift; sourceTree = "<group>"; };
+		074B8D071E492081000B76BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		074B8D171E4927FB000B76BA /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		074B8D191E492806000B76BA /* EventPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPost.swift; sourceTree = "<group>"; };
+		074B8D1B1E49281B000B76BA /* Charity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Charity.swift; sourceTree = "<group>"; };
+		074B8D1D1E492828000B76BA /* CharityAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharityAPI.swift; sourceTree = "<group>"; };
+		074B8D1F1E492847000B76BA /* PledgeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PledgeAPI.swift; sourceTree = "<group>"; };
+		074B8D211E4928A8000B76BA /* Individual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Individual.swift; sourceTree = "<group>"; };
+		074B8D231E492907000B76BA /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
+		074B8F041E4A4E85000B76BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		074B8F061E4A4EF8000B76BA /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		074B95991E4B98AD000B76BA /* IndividualPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IndividualPost.swift; path = ../IndividualPost.swift; sourceTree = "<group>"; };
+		074B959B1E4B98BF000B76BA /* OrganizationPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationPost.swift; sourceTree = "<group>"; };
+		074B959D1E4B9C66000B76BA /* CharityPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharityPost.swift; sourceTree = "<group>"; };
+		074B95A11E4CB0B5000B76BA /* IndividualTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IndividualTests.swift; path = ../IndividualTests.swift; sourceTree = "<group>"; };
+		074B95A31E4CB0DC000B76BA /* OrganizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationTests.swift; sourceTree = "<group>"; };
+		074B95A51E4CB0F6000B76BA /* EventTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
+		074B95A71E4CB119000B76BA /* CharityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharityTests.swift; sourceTree = "<group>"; };
+		074B95E51E4CED22000B76BA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		074B96211E4D1003000B76BA /* EventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
+		074B96231E4D13EF000B76BA /* CharitiesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharitiesTableViewController.swift; sourceTree = "<group>"; };
+		074B96271E4E543F000B76BA /* EventStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStore.swift; sourceTree = "<group>"; };
+		076E915B1E4FF94C00E61894 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		076E915D1E5007C600E61894 /* CharityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharityViewController.swift; sourceTree = "<group>"; };
+		076E91611E512E6C00E61894 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		074B8CDF1E492081000B76BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074B8CF31E492081000B76BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074B8CFE1E492081000B76BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		074B8CD91E492081000B76BA = {
+			isa = PBXGroup;
+			children = (
+				074B8CE41E492081000B76BA /* Pledge App */,
+				074B8CF91E492081000B76BA /* Pledge AppTests */,
+				074B8D041E492081000B76BA /* Pledge AppUITests */,
+				074B8CE31E492081000B76BA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		074B8CE31E492081000B76BA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				074B8CE21E492081000B76BA /* Pledge App.app */,
+				074B8CF61E492081000B76BA /* Pledge AppTests.xctest */,
+				074B8D011E492081000B76BA /* Pledge AppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		074B8CE41E492081000B76BA /* Pledge App */ = {
+			isa = PBXGroup;
+			children = (
+				074B8CE51E492081000B76BA /* AppDelegate.swift */,
+				074B8CE91E492081000B76BA /* Main.storyboard */,
+				074B8F041E4A4E85000B76BA /* LoginViewController.swift */,
+				074B8F061E4A4EF8000B76BA /* RegisterViewController.swift */,
+				074B96211E4D1003000B76BA /* EventsTableViewController.swift */,
+				076E91611E512E6C00E61894 /* AddEventViewController.swift */,
+				076E915B1E4FF94C00E61894 /* EventViewController.swift */,
+				074B96231E4D13EF000B76BA /* CharitiesTableViewController.swift */,
+				076E915D1E5007C600E61894 /* CharityViewController.swift */,
+				07477D791E523964009DC76E /* DonateViewController.swift */,
+				074B95E51E4CED22000B76BA /* HomeViewController.swift */,
+				074B8D211E4928A8000B76BA /* Individual.swift */,
+				074B8D1F1E492847000B76BA /* PledgeAPI.swift */,
+				074B95991E4B98AD000B76BA /* IndividualPost.swift */,
+				074B959B1E4B98BF000B76BA /* OrganizationPost.swift */,
+				074B8D231E492907000B76BA /* Organization.swift */,
+				074B8D171E4927FB000B76BA /* Event.swift */,
+				074B8D191E492806000B76BA /* EventPost.swift */,
+				074B96271E4E543F000B76BA /* EventStore.swift */,
+				074B8D1B1E49281B000B76BA /* Charity.swift */,
+				074B8D1D1E492828000B76BA /* CharityAPI.swift */,
+				074B959D1E4B9C66000B76BA /* CharityPost.swift */,
+				074B8CEC1E492081000B76BA /* Assets.xcassets */,
+				074B8CEE1E492081000B76BA /* LaunchScreen.storyboard */,
+				074B8CF11E492081000B76BA /* Info.plist */,
+			);
+			path = "Pledge App";
+			sourceTree = "<group>";
+		};
+		074B8CF91E492081000B76BA /* Pledge AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				074B8CFA1E492081000B76BA /* Pledge_AppTests.swift */,
+				074B95A11E4CB0B5000B76BA /* IndividualTests.swift */,
+				074B95A31E4CB0DC000B76BA /* OrganizationTests.swift */,
+				074B8CFC1E492081000B76BA /* Info.plist */,
+				074B95A51E4CB0F6000B76BA /* EventTests.swift */,
+				074B95A71E4CB119000B76BA /* CharityTests.swift */,
+			);
+			path = "Pledge AppTests";
+			sourceTree = "<group>";
+		};
+		074B8D041E492081000B76BA /* Pledge AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				074B8D051E492081000B76BA /* Pledge_AppUITests.swift */,
+				074B8D071E492081000B76BA /* Info.plist */,
+			);
+			path = "Pledge AppUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		074B8CE11E492081000B76BA /* Pledge App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 074B8D0A1E492081000B76BA /* Build configuration list for PBXNativeTarget "Pledge App" */;
+			buildPhases = (
+				074B8CDE1E492081000B76BA /* Sources */,
+				074B8CDF1E492081000B76BA /* Frameworks */,
+				074B8CE01E492081000B76BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pledge App";
+			productName = "Pledge App";
+			productReference = 074B8CE21E492081000B76BA /* Pledge App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		074B8CF51E492081000B76BA /* Pledge AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 074B8D0D1E492081000B76BA /* Build configuration list for PBXNativeTarget "Pledge AppTests" */;
+			buildPhases = (
+				074B8CF21E492081000B76BA /* Sources */,
+				074B8CF31E492081000B76BA /* Frameworks */,
+				074B8CF41E492081000B76BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				074B8CF81E492081000B76BA /* PBXTargetDependency */,
+			);
+			name = "Pledge AppTests";
+			productName = "Pledge AppTests";
+			productReference = 074B8CF61E492081000B76BA /* Pledge AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		074B8D001E492081000B76BA /* Pledge AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 074B8D101E492081000B76BA /* Build configuration list for PBXNativeTarget "Pledge AppUITests" */;
+			buildPhases = (
+				074B8CFD1E492081000B76BA /* Sources */,
+				074B8CFE1E492081000B76BA /* Frameworks */,
+				074B8CFF1E492081000B76BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				074B8D031E492081000B76BA /* PBXTargetDependency */,
+			);
+			name = "Pledge AppUITests";
+			productName = "Pledge AppUITests";
+			productReference = 074B8D011E492081000B76BA /* Pledge AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		074B8CDA1E492081000B76BA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Adrian McDaniel";
+				TargetAttributes = {
+					074B8CE11E492081000B76BA = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7WUZ36X7MR;
+						ProvisioningStyle = Automatic;
+					};
+					074B8CF51E492081000B76BA = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7WUZ36X7MR;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 074B8CE11E492081000B76BA;
+					};
+					074B8D001E492081000B76BA = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7WUZ36X7MR;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 074B8CE11E492081000B76BA;
+					};
+				};
+			};
+			buildConfigurationList = 074B8CDD1E492081000B76BA /* Build configuration list for PBXProject "Pledge App" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 074B8CD91E492081000B76BA;
+			productRefGroup = 074B8CE31E492081000B76BA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				074B8CE11E492081000B76BA /* Pledge App */,
+				074B8CF51E492081000B76BA /* Pledge AppTests */,
+				074B8D001E492081000B76BA /* Pledge AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		074B8CE01E492081000B76BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074B8CF01E492081000B76BA /* LaunchScreen.storyboard in Resources */,
+				074B8CED1E492081000B76BA /* Assets.xcassets in Resources */,
+				074B8CEB1E492081000B76BA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074B8CF41E492081000B76BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074B8CFF1E492081000B76BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		074B8CDE1E492081000B76BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074B96241E4D13EF000B76BA /* CharitiesTableViewController.swift in Sources */,
+				07477D7A1E523964009DC76E /* DonateViewController.swift in Sources */,
+				076E91621E512E6C00E61894 /* AddEventViewController.swift in Sources */,
+				074B959C1E4B98BF000B76BA /* OrganizationPost.swift in Sources */,
+				074B8D201E492847000B76BA /* PledgeAPI.swift in Sources */,
+				074B959A1E4B98AD000B76BA /* IndividualPost.swift in Sources */,
+				074B8D241E492907000B76BA /* Organization.swift in Sources */,
+				076E915E1E5007C600E61894 /* CharityViewController.swift in Sources */,
+				076E915C1E4FF94C00E61894 /* EventViewController.swift in Sources */,
+				074B8D1E1E492828000B76BA /* CharityAPI.swift in Sources */,
+				074B95E61E4CED22000B76BA /* HomeViewController.swift in Sources */,
+				074B8F071E4A4EF8000B76BA /* RegisterViewController.swift in Sources */,
+				074B8CE61E492081000B76BA /* AppDelegate.swift in Sources */,
+				074B96221E4D1003000B76BA /* EventsTableViewController.swift in Sources */,
+				074B8D221E4928A8000B76BA /* Individual.swift in Sources */,
+				074B8D1A1E492806000B76BA /* EventPost.swift in Sources */,
+				074B8D1C1E49281B000B76BA /* Charity.swift in Sources */,
+				074B959E1E4B9C66000B76BA /* CharityPost.swift in Sources */,
+				074B96281E4E543F000B76BA /* EventStore.swift in Sources */,
+				074B8D181E4927FB000B76BA /* Event.swift in Sources */,
+				074B8F051E4A4E85000B76BA /* LoginViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074B8CF21E492081000B76BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074B95A61E4CB0F6000B76BA /* EventTests.swift in Sources */,
+				074B95A21E4CB0B5000B76BA /* IndividualTests.swift in Sources */,
+				074B95A81E4CB119000B76BA /* CharityTests.swift in Sources */,
+				074B8CFB1E492081000B76BA /* Pledge_AppTests.swift in Sources */,
+				074B95A41E4CB0DC000B76BA /* OrganizationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		074B8CFD1E492081000B76BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074B8D061E492081000B76BA /* Pledge_AppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		074B8CF81E492081000B76BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 074B8CE11E492081000B76BA /* Pledge App */;
+			targetProxy = 074B8CF71E492081000B76BA /* PBXContainerItemProxy */;
+		};
+		074B8D031E492081000B76BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 074B8CE11E492081000B76BA /* Pledge App */;
+			targetProxy = 074B8D021E492081000B76BA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		074B8CE91E492081000B76BA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				074B8CEA1E492081000B76BA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		074B8CEE1E492081000B76BA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				074B8CEF1E492081000B76BA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		074B8D081E492081000B76BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		074B8D091E492081000B76BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		074B8D0B1E492081000B76BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7WUZ36X7MR;
+				INFOPLIST_FILE = "Pledge App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "AdrianMcDaniel.Pledge-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		074B8D0C1E492081000B76BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7WUZ36X7MR;
+				INFOPLIST_FILE = "Pledge App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "AdrianMcDaniel.Pledge-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		074B8D0E1E492081000B76BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7WUZ36X7MR;
+				INFOPLIST_FILE = "Pledge AppTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "AdrianMcDaniel.Pledge-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pledge App.app/Pledge App";
+			};
+			name = Debug;
+		};
+		074B8D0F1E492081000B76BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7WUZ36X7MR;
+				INFOPLIST_FILE = "Pledge AppTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "AdrianMcDaniel.Pledge-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pledge App.app/Pledge App";
+			};
+			name = Release;
+		};
+		074B8D111E492081000B76BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 7WUZ36X7MR;
+				INFOPLIST_FILE = "Pledge AppUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "AdrianMcDaniel.Pledge-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "Pledge App";
+			};
+			name = Debug;
+		};
+		074B8D121E492081000B76BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 7WUZ36X7MR;
+				INFOPLIST_FILE = "Pledge AppUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "AdrianMcDaniel.Pledge-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "Pledge App";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		074B8CDD1E492081000B76BA /* Build configuration list for PBXProject "Pledge App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				074B8D081E492081000B76BA /* Debug */,
+				074B8D091E492081000B76BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		074B8D0A1E492081000B76BA /* Build configuration list for PBXNativeTarget "Pledge App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				074B8D0B1E492081000B76BA /* Debug */,
+				074B8D0C1E492081000B76BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		074B8D0D1E492081000B76BA /* Build configuration list for PBXNativeTarget "Pledge AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				074B8D0E1E492081000B76BA /* Debug */,
+				074B8D0F1E492081000B76BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		074B8D101E492081000B76BA /* Build configuration list for PBXNativeTarget "Pledge AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				074B8D111E492081000B76BA /* Debug */,
+				074B8D121E492081000B76BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 074B8CDA1E492081000B76BA /* Project object */;
+}
