@@ -10,21 +10,17 @@ import UIKit
 
 class CharityViewController: UIViewController {
     
-    var individualPost = IndividualPost()
-    var organizationPost = OrganizationPost()
-    var individual: Individual? = nil
-    var organization: Organization? = nil
+    
     
     var charity: Charity? = nil
     
     
-    var loggedIn: Bool = false
     
 
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var typeLabel: UILabel!
     @IBOutlet var addressLabel: UILabel!
-    @IBOutlet var detailsLabel: UILabel!
+    @IBOutlet var donateButton: UIButton!
     
     
     @IBAction func donate(_ sender: Any) {
@@ -40,16 +36,23 @@ class CharityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Pledge"
+        title = "Charity"
         
         nameLabel.text = charity?.name
         typeLabel.text = charity?.category
         addressLabel.text = "\(charity!.city), \(charity!.state), \(charity!.zip)"
-        detailsLabel.text = charity?.description
+        
+        
+        if charity?.accept != 1 {
+          donateButton.isHidden = true
+        }
 
         // Do any additional setup after loading the view.
     }
-
+    
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

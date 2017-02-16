@@ -1,24 +1,22 @@
 //
-//  EventsTableViewController.swift
+//  MyEventsTableViewController.swift
 //  Pledge App
 //
-//  Created by Adrian McDaniel on 2/9/17.
+//  Created by Adrian McDaniel on 2/14/17.
 //  Copyright © 2017 Adrian McDaniel. All rights reserved.
 //
 
 import UIKit
 
-class EventsTableViewController: UITableViewController {
+class MyEventsTableViewController: UITableViewController {
     
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     
     var eventStore = EventStore()
     var individualPost = IndividualPost()
     var organizationPost = OrganizationPost()
-    var individual: Individual? = nil
     var organization: Organization? = nil
-    
-    
+    var individual: Individual? = nil
     
     var events: [Event] = [] {
         didSet {
@@ -26,39 +24,12 @@ class EventsTableViewController: UITableViewController {
         }
     }
     
-    let startDateFormatter = DateFormatter()
-    let startTimeFormatter = DateFormatter()
-
-    
-    let eventCellIdentifier = "EventCell"
-    
-    
-   
-    
-    func mustLogin(action: UIAlertAction!) {
-        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
-        
-        self.navigationController?.pushViewController(loginVC, animated:
-            true)
-        
-        return
-    }
+    let eventCellIdentifier = "MyEventCell"
     
     func addButtonTapped(_ sender: UIBarButtonItem) {
+        print("itworked")
         
-        if !isUserLoggedIn {
-            let ac = UIAlertController(title: "Must Login to Add Event", message: nil, preferredStyle: .alert)
-            
-            ac.addAction(UIAlertAction(title: "OK", style: .default, handler:mustLogin))
-            
-            self.present(ac, animated: true)
-        }
-        
-        let addEventVC = self.storyboard!.instantiateViewController(withIdentifier: "AddEventView") as! AddEventViewController
-        self.navigationController?.pushViewController(addEventVC, animated:
-            true)
-        
-        }
+    }
     
     func logoutButtonTapped(_ sender: UIBarButtonItem) {
         
@@ -70,44 +41,34 @@ class EventsTableViewController: UITableViewController {
         
     }
     
-    func loginButtonTapped(_ sender: UIBarButtonItem) {
-        
-        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
-        
-        self.navigationController?.pushViewController(loginVC, animated:
-            true)
-        
-        return
-    }
     
-    
-    
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Events"
         
-        if isUserLoggedIn {
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title:
-            "Logout", style: .plain, target: self, action:
-            #selector(logoutButtonTapped))
+        title = "MyEvents"
+        
+        if !isUserLoggedIn {
+            let acNoNetwork = UIAlertController(title: "Must Login to View MyEvents", message: nil, preferredStyle: .alert)
             
-        } else {
+            acNoNetwork.addAction(UIAlertAction(title: "OK", style: .default, handler: self.mustLogin))
             
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title:
-                "Login", style: .plain, target: self, action:
-                #selector(loginButtonTapped))
+            self.present(acNoNetwork, animated: true)
         }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title:
             "Add Event", style: .plain, target: self, action:
             #selector(addButtonTapped))
-
-        eventStore.fetchUpcomingEvents { result in
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title:
+            "Logout", style: .plain, target: self, action:
+            #selector(logoutButtonTapped))
+        
+            
+            
+        }
+        /*eventStore.fetchUpcomingEvents { result in
             switch result {
             case let .success(array) :
                 print(array)
@@ -117,9 +78,11 @@ class EventsTableViewController: UITableViewController {
             case let .failure(error) :
                 print("failed to get events: \(error)")
             }
-        }
+        }*/
         
-    }
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -127,19 +90,28 @@ class EventsTableViewController: UITableViewController {
         self.update()
         
     }
-
+    
+    func mustLogin(action: UIAlertAction!) {
+        let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
+        
+        self.navigationController?.pushViewController(loginVC, animated:
+            true)
+        
+        return
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return events.count
@@ -149,15 +121,8 @@ class EventsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: eventCellIdentifier, for: indexPath)
         
         
-        startDateFormatter.dateStyle = .medium
-        startDateFormatter.timeStyle = .none
-        
-        startTimeFormatter.dateStyle = .none
-        startTimeFormatter.timeStyle = .short
-        
         cell.textLabel?.text = events[indexPath.row].name
-        cell.detailTextLabel?.text = "\((events[indexPath.row].type).capitalized)\n\(events[indexPath.row].location) - \((events[indexPath.row].city).uppercased())\n\(startDateFormatter.string(from: Date(timeIntervalSince1970: (events[indexPath.row].startTime) / 1000)))  \(startTimeFormatter.string(from: Date(timeIntervalSince1970: (events[indexPath.row].startTime) / 1000)))"
-        
+        cell.detailTextLabel?.text = "\((events[indexPath.row].type).capitalized)\n\(events[indexPath.row].location) -\((events[indexPath.row].city).uppercased())\n\(Date(timeIntervalSince1970: (events[indexPath.row].startTime) / 1000))"
         
         
         return cell

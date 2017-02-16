@@ -10,19 +10,26 @@ import UIKit
 
 class AddEventViewController: UIViewController {
     
+    let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
+    
     var eventStore = EventStore()
     var individualPost = IndividualPost()
     var organizationPost = OrganizationPost()
     var individual: Individual? = nil
     var organization: Organization? = nil
     var events: [Event] = []
-    var loggedIn: Bool = false
+    
     
     
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Add Event"
+        
+        if !isUserLoggedIn {
+            //send to login page
+        }
 
         // Do any additional setup after loading the view.
     }

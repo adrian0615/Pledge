@@ -13,10 +13,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var individual: Individual? = nil
     var organization: Organization? = nil
-    let individualPost = IndividualPost()
-    let organizationPost = OrganizationPost()
+    var individualPost = IndividualPost()
+    var organizationPost = OrganizationPost()
     
-    var loggedIn: Bool = false
     
     @IBOutlet var individualLabel: UILabel!
     @IBOutlet var organizationLabel: UILabel!
@@ -28,44 +27,119 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         if loginToggle.isOn == true {
             
-            organizationPost.postLogin(email: emailField.text!, password: passwordFIeld.text!) { loginResult in
-             switch loginResult {
-             case let .success(result) :
-             self.organization = result
-             
-             self.loggedIn = true
-             
-             case let .failure(error) :
-             print("failed to Login: \(error)")
-             }
-             }
+            if (emailField.text?.isEmpty)! || (passwordFIeld.text?.isEmpty)! {
+                
+                displayMyAlertMessage(userMessage: "All fields are required")
+                
+                return
+            }
             
+            let email = emailField.text
+            let password = passwordFIeld.text
             
-            
-            
-            let eventsVC = self.storyboard!.instantiateViewController(withIdentifier: "EventsView") as! EventsTableViewController
-            let eventVC = self.storyboard!.instantiateViewController(withIdentifier: "EventView") as! EventViewController
-            
-            
-            
+            organizationPost.postLogin(email: email!, password: password!) { loginResult in
+                switch loginResult {
+                case let .success(result) :
+                    
+                    OperationQueue.main.addOperation {
+                        
+                        self.organization = result
+                        
+                        UserDefaults.standard.set("organization", forKey: "type")
+                        UserDefaults.standard.set(email, forKey: "email")
+                        UserDefaults.standard.set(password, forKey: "password")
+                        UserDefaults.standard.set(self.organization?.userId, forKey: "userId")
+                        UserDefaults.standard.set(self.organization?.hostId, forKey: "hostId")
+                        UserDefaults.standard.set(self.organization?.name, forKey: "name")
+                        UserDefaults.standard.set(self.organization?.address, forKey: "address")
+                        UserDefaults.standard.set(self.organization?.city, forKey: "city")
+                        UserDefaults.standard.set(self.organization?.state, forKey: "state")
+                        UserDefaults.standard.set(self.organization?.zip, forKey: "zip")
+                        UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
+                        UserDefaults.standard.synchronize()
+                        
+                        let myAlert = UIAlertController(title: "Alert", message: "Login Successful", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                            
+                            
+                            let homeVC = self.storyboard!.instantiateViewController(withIdentifier: "HomeView") as! HomeViewController
+                            self.present(homeVC, animated: true, completion: nil)
+                        }
+                        
+                        myAlert.addAction(okAction)
+                        
+                        self.present(myAlert, animated: true, completion: nil)
+                    }
+                    
+                    
+                    
+                case let .failureLogin(badLogin) :
+                    
+                    self.displayMyAlertMessage(userMessage: "Incorrect Login.  \(badLogin).")
+                    
+                case let .failure(error) :
+                    
+                    print("failed to Register: \(error)")
+                    self.displayMyAlertMessage(userMessage: "Failed to Login.  Try again.")
+                }
+            }
+            return
         } else {
-            individualPost.postLogin(email: emailField.text!, password: passwordFIeld.text!) { loginResult in
-             switch loginResult {
-             case let .success(result) :
+            
+            if (emailField.text?.isEmpty)! || (passwordFIeld.text?.isEmpty)! {
                 
-                self.individual = result
-                self.loggedIn = true
+                displayMyAlertMessage(userMessage: "All fields are required")
                 
-             
-             case let .failure(error) :
-             print("failed to Login: \(error)")
-             }
-             }
+                return
+            }
+            
+            let email = emailField.text
+            let password = passwordFIeld.text
+            
+            individualPost.postLogin(email: email!, password: password!) { loginResult in
+                switch loginResult {
+                case let .success(result) :
+                    
+                    OperationQueue.main.addOperation {
+                        
+                        self.individual = result
+                        
+                        UserDefaults.standard.set("individual", forKey: "type")
+                        UserDefaults.standard.set(email, forKey: "email")
+                        UserDefaults.standard.set(password, forKey: "password")
+                        UserDefaults.standard.set(self.individual?.userId, forKey: "userId")
+                        UserDefaults.standard.set(self.individual?.hostId, forKey: "hostId")
+                        UserDefaults.standard.set(self.individual?.firstName, forKey: "firstName")
+                        UserDefaults.standard.set(self.individual?.lastName, forKey: "lastName")
+                        UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
+                        UserDefaults.standard.synchronize()
+                        
+                        let myAlert = UIAlertController(title: "Alert", message: "Login Successful", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                            
+                            
+                            let homeVC = self.storyboard!.instantiateViewController(withIdentifier: "HomeView") as! HomeViewController
+                            self.present(homeVC, animated: true, completion: nil)
+                        }
+                        
+                        myAlert.addAction(okAction)
+                        
+                        self.present(myAlert, animated: true, completion: nil)
+                    }
+                    
+                case let .failureLogin(badLogin) :
+                    self.displayMyAlertMessage(userMessage: "Incorrect Login.  \(badLogin).")
+                    
+                case let .failure(error) :
+                    print("failed to Login: \(error)")
+                    self.displayMyAlertMessage(userMessage: "Failed to Login.  Try again.")
+                }
+            }
             
             
-        
-        
-    }
+            
+            
+        }
     }
     @IBAction func toggle(_ sender: Any) {
         
@@ -78,7 +152,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-
+    
     override func viewDidLoad() {
         
         
@@ -87,11 +161,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginToggle.isOn = false
         showIndividual()
         
-        
         title = "Login"
         
+        navigationController?.navigationBar.isHidden = true
         
+    }
     
+    func displayMyAlertMessage(userMessage: String) {
+        
+        OperationQueue.main.addOperation {
+            
+            let myAlert = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            myAlert.addAction(action)
+            
+            self.present(myAlert, animated: true, completion: nil)
+            
+            return
+        }
     }
     
     func showIndividual() {
@@ -103,23 +191,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         individualLabel.textColor = UIColor.gray
         organizationLabel.textColor = UIColor.green
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -8,16 +8,15 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController, UITextFieldDelegate {
+class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var individual: Individual? = nil
     var organization: Organization? = nil
-    let organizationPost = OrganizationPost()
-    let individualPost = IndividualPost()
+    var organizationPost = OrganizationPost()
+    var individualPost = IndividualPost()
+    let states = ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KY", "KS", "LA", "LV", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "NE", "ND", "NH", "NJ", "NM", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"]
     
-    var loggedIn: Bool = false
-    
-    
+    var state: String = " "
     
     @IBOutlet var individualNameLabel: UILabel!
     
@@ -33,22 +32,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     //textFields need to be clear when things are toggled
     //way to hide password
     
-    @IBOutlet var firstNameLabel: UILabel!
-    @IBOutlet var familyNameLabel: UILabel!
-    @IBOutlet var emailLabel: UILabel!
-    @IBOutlet var addressLabel: UILabel!
-    @IBOutlet var cityLabel: UILabel!
-    @IBOutlet var stateLabel: UILabel!
-    @IBOutlet var zipLabel: UILabel!
-    @IBOutlet var passwordOneLabel: UILabel!
-    @IBOutlet var passwordTwoLabel: UILabel!
+    
     
     @IBOutlet var firstNameField: UITextField!
     @IBOutlet var familyNameField: UITextField!
     @IBOutlet var emailField: UITextField!
     @IBOutlet var addressField: UITextField!
     @IBOutlet var cityField: UITextField!
-    @IBOutlet var stateField: UITextField!
+    @IBOutlet var statePicker: UIPickerView!
     @IBOutlet var zipField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var passwordTwoField: UITextField!
@@ -59,10 +50,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         if registerSwitch.isOn == true {
             showOrganization()
-            loggedIn = true
+            
         } else {
             showIndividual()
-            loggedIn = true
+            
         }
         
     }
@@ -73,43 +64,182 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func registerButton(_ sender: Any) {
+        
+        
         if registerSwitch.isOn == true {
             
-            self.organizationPost.postRegister(name: familyNameField.text!, address: addressField.text!, city: cityField.text!, state: stateField.text!, zip: Int(zipField.text!)!, email: emailField.text!, password: passwordField.text!) { registerResult in
-             switch registerResult {
-             case let .success(result) :
-             self.organization = result
-             
-             case let .failure(error) :
-             print("failed to Register: \(error)")
-             }
-             }
+            if (familyNameField.text?.isEmpty)! || (emailField.text?.isEmpty)! || (addressField.text?.isEmpty)! || (cityField.text?.isEmpty)! || (zipField.text?.isEmpty)! || (passwordField.text?.isEmpty)! || (passwordTwoField.text?.isEmpty)! {
+                
+                displayMyAlertMessage(userMessage: "All fields are required")
+                
+                return
+            }
+            
+            if passwordField.text != passwordTwoField.text {
+                
+                displayMyAlertMessage(userMessage: "Passwords do not match")
+                
+                return
+            }
+            
+            let name = familyNameField.text
+            let address = addressField.text
+            let city = cityField.text
+            let zip = zipField.text
+            let email = emailField.text
+            let password = passwordField.text
+            
+            self.organizationPost.postRegister(name: name!, address: address!, city: city!, state: self.state, zip: Int(zip!)!, email: email!, password: password!) { registerResult in
+                
+                switch registerResult {
+                    
+                case let .success(result) :
+                    
+                    OperationQueue.main.addOperation {
+                        self.organization = result
+                        UserDefaults.standard.set("organization", forKey: "type")
+                        UserDefaults.standard.set(email, forKey: "email")
+                        UserDefaults.standard.set(password, forKey: "userPassword")
+                        UserDefaults.standard.set(self.organization?.userId, forKey: "userId")
+                        UserDefaults.standard.set(self.organization?.hostId, forKey: "hostId")
+                        UserDefaults.standard.set(self.organization?.name, forKey: "name")
+                        UserDefaults.standard.set(self.organization?.address, forKey: "address")
+                        UserDefaults.standard.set(self.organization?.city, forKey: "city")
+                        UserDefaults.standard.set(self.organization?.state, forKey: "state")
+                        UserDefaults.standard.set(self.organization?.zip, forKey: "zip")
+                        UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
+                        UserDefaults.standard.synchronize()
+                        
+                        let myAlert = UIAlertController(title: "Alert", message: "Registration Successful", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                            
+                            
+                            
+                            
+                            
+                            let homeVC = self.storyboard!.instantiateViewController(withIdentifier: "HomeView") as! HomeViewController
+                            self.present(homeVC, animated: true, completion: nil)
+                        }
+                        
+                        myAlert.addAction(okAction)
+                        
+                        self.present(myAlert, animated: true, completion: nil)
+                    }
+                case let .failureLogin(badLogin) :
+                    self.displayMyAlertMessage(userMessage: "Failed to Register.  \(badLogin).")
+                    
+                case let .failure(error) :
+                    print("failed to Register: \(error)")
+                    self.displayMyAlertMessage(userMessage: "Failed to Register.  Try again.")
+                }
+            }
+            
         } else {
-            individualPost.postRegister(firstName: firstNameField.text!, lastName: familyNameField.text!, email: emailField.text!, password: addressField.text!) { registerResult in
-             switch registerResult {
-             case let .success(result) :
-             self.individual = result
-             
-             case let .failure(error) :
-             print("failed to Register: \(error)")
-             }
-             }
+            
+            if (firstNameField.text?.isEmpty)! || (familyNameField.text?.isEmpty)! || (emailField.text?.isEmpty)! || (addressField.text?.isEmpty)! || (cityField.text?.isEmpty)! {
+                
+                displayMyAlertMessage(userMessage: "All fields are required")
+                
+                return
+            }
+            
+            
+            if addressField.text != cityField.text {
+                
+                displayMyAlertMessage(userMessage: "Passwords do not match")
+                
+                return
+            }
+            
+            let firstName = firstNameField.text
+            let lastName = familyNameField.text
+            let email = emailField.text
+            let password = addressField.text
+            
+            individualPost.postRegister(firstName: firstName!, lastName: lastName!, email: email!, password: password!) { registerResult in
+                
+                switch registerResult {
+                    
+                case let .success(result) :
+                    
+                    OperationQueue.main.addOperation {
+                        self.individual = result
+                        
+                        UserDefaults.standard.set("Individual", forKey: "type")
+                        UserDefaults.standard.set(email, forKey: "email")
+                        UserDefaults.standard.set(password, forKey: "userPassword")
+                        UserDefaults.standard.set(self.individual?.userId, forKey: "userId")
+                        UserDefaults.standard.set(self.individual?.hostId, forKey: "hostId")
+                        UserDefaults.standard.set(self.individual?.firstName, forKey: "firstName")
+                        UserDefaults.standard.set(self.individual?.lastName, forKey: "lastName")
+                        UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
+                        UserDefaults.standard.synchronize()
+                        
+                        let myAlert = UIAlertController(title: "Alert", message: "Registration Successful", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                            
+                            
+                            
+                            
+                            
+                            let homeVC = self.storyboard!.instantiateViewController(withIdentifier: "HomeView") as! HomeViewController
+                            self.present(homeVC, animated: true, completion: nil)
+                        }
+                        
+                        myAlert.addAction(okAction)
+                        
+                        self.present(myAlert, animated: true, completion: nil)
+                    }
+                    
+                case let .failureLogin(badLogin) :
+                    self.displayMyAlertMessage(userMessage: "Failed to Register.  \(badLogin).")
+                    
+                case let .failure(error) :
+                    print("failed to Register: \(error)")
+                    self.displayMyAlertMessage(userMessage: "Failed to Register.  Try again.")
+                }
+            }
         }
     }
-
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return states.count
+    }
+    
+    // Delegate
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return states[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        state = states[row]
+    }
+    
+    func displayMyAlertMessage(userMessage: String) {
+        
+        OperationQueue.main.addOperation {
+            
+            let myAlert = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            myAlert.addAction(action)
+            
+            self.present(myAlert, animated: true, completion: nil)
+            
+            return
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        firstNameField.delegate = self
-        familyNameField.delegate = self
-        emailField.delegate = self
-        addressField.delegate = self
-        cityField.delegate = self
-        stateField.delegate = self
-        zipField.delegate = self
-        passwordField.delegate = self
-        passwordTwoField.delegate = self
+        navigationController?.navigationBar.isHidden = false
         
+        statePicker.delegate = self
+        statePicker.dataSource = self
         
         title = "Register"
         
@@ -117,8 +247,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         showIndividual()
         
-        //hide addressField text for password
-        //hide cityField text for password
         
     }
     
@@ -127,18 +255,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         individualNameLabel.textColor = UIColor.green
         organizationNameLabel.isHighlighted = false
         organizationNameLabel.textColor = UIColor.gray
-        firstNameLabel.isHidden = false
         firstNameField.isHidden = false
-        familyNameLabel.text = "Last Name:"
-        addressLabel.text = "Password:"
-        cityLabel.text = "Confirm Password:"
-        stateLabel.isHidden = true
-        stateField.isHidden = true
-        zipLabel.isHidden = true
+        firstNameField.isHidden = false
+        familyNameField.placeholder = "Last Name"
+        addressField.placeholder = "Password"
+        cityField.placeholder = "Confirm Password"
+        statePicker.isHidden = true
         zipField.isHidden = true
-        passwordOneLabel.isHidden = true
         passwordField.isHidden = true
-        passwordTwoLabel.isHidden = true
         passwordTwoField.isHidden = true
         addressField.isSecureTextEntry = true
         cityField.isSecureTextEntry = true
@@ -150,24 +274,20 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         individualNameLabel.textColor = UIColor.gray
         organizationNameLabel.isHighlighted = true
         organizationNameLabel.textColor = UIColor.green
-        firstNameLabel.isHidden = true
         firstNameField.isHidden = true
-        familyNameLabel.text = "Company:"
-        addressLabel.text = "Address:"
-        cityLabel.text = "City:"
-        stateLabel.isHidden = false
-        stateField.isHidden = false
-        zipLabel.isHidden = false
+        firstNameField.isHidden = true
+        familyNameField.placeholder = "Company"
+        addressField.placeholder = "Address"
+        cityField.placeholder = "City"
+        statePicker.isHidden = false
         zipField.isHidden = false
-        passwordOneLabel.isHidden = false
         passwordField.isHidden = false
-        passwordTwoLabel.isHidden = false
         passwordTwoField.isHidden = false
         passwordField.isSecureTextEntry = true
         passwordTwoField.isSecureTextEntry = true
         addressField.isSecureTextEntry = false
         cityField.isSecureTextEntry = false
-
+        
     }
     
     
@@ -176,15 +296,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

@@ -10,15 +10,11 @@ import UIKit
 
 class CharitiesTableViewController: UITableViewController {
     
-    var individualPost = IndividualPost()
-    var organizationPost = OrganizationPost()
+    
     var charityPost = CharityPost()
-    var individual: Individual? = nil
-    var organization: Organization? = nil
     
     
     
-    var loggedIn: Bool = false
     
     var charities: [Charity] = [] {
         didSet {
@@ -75,8 +71,7 @@ class CharitiesTableViewController: UITableViewController {
         
         
         cell.textLabel?.text = charities[indexPath.row].name
-        cell.textLabel?.textAlignment = .center
-        cell.textLabel?.textColor = UIColor.blue
+        cell.detailTextLabel?.text = "\(charities[indexPath.row].category)\n\(charities[indexPath.row].city)"
         
         return cell
     }
@@ -87,11 +82,7 @@ class CharitiesTableViewController: UITableViewController {
         let charityVC = self.storyboard!.instantiateViewController(withIdentifier: "CharityView") as! CharityViewController
         
         charityVC.charity = charities[indexPath.row]
-        charityVC.individual = individual
-        charityVC.organization = organization
-        charityVC.individualPost = individualPost
-        charityVC.organizationPost = organizationPost
-        charityVC.loggedIn = loggedIn
+        
         
         self.navigationController?.pushViewController(charityVC, animated:
             true)

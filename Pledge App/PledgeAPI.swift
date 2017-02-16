@@ -30,6 +30,7 @@ struct PledgeAPI {
         case individualProfile
         case organizationProfile
         case upcomingEvents
+        case rsvpEvent
         
         var urlPathComponent: String {
             switch self {
@@ -46,13 +47,16 @@ struct PledgeAPI {
                 return "register-organization.json"
                 
             case .individualProfile:
-                return "profile-individual.json"
+                return "edit-individual.json"
                 
             case .organizationProfile:
-                return "profile-organization.json"
+                return "edit-organization.json"
                 
             case .upcomingEvents:
                 return "event-list.json"
+            
+            case .rsvpEvent:
+                return "join-event.json"
             }
         }
         

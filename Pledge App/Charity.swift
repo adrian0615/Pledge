@@ -11,7 +11,7 @@ import Foundation
 
 class Charity: Equatable {
     public static func == (lhs: Charity, rhs: Charity) -> Bool {
-        return lhs.name == rhs.name && lhs.category == rhs.category && lhs.city == rhs.city && lhs.state == rhs.state && lhs.zip == rhs.zip && lhs.description == rhs.description && lhs.donate == rhs.donate
+        return lhs.name == rhs.name && lhs.category == rhs.category && lhs.city == rhs.city && lhs.state == rhs.state && lhs.zip == rhs.zip && lhs.description == rhs.description && lhs.donate == rhs.donate && lhs.accept == rhs.accept
     }
     
     let name: String
@@ -21,9 +21,10 @@ class Charity: Equatable {
     let zip: String
     let description: String
     let donate: String
+    let accept: Int
     
     
-    init(name: String, category: String, city: String, state: String, zip: String, description: String, donate: String) {
+    init(name: String, category: String, city: String, state: String, zip: String, description: String, donate: String, accept: Int) {
         self.name = name
         self.category = category
         self.city = city
@@ -31,6 +32,7 @@ class Charity: Equatable {
         self.zip = zip
         self.description = description
         self.donate = donate
+        self.accept = accept
     }
     
     convenience init?(jsonObject: [String: Any]) {
@@ -42,12 +44,13 @@ class Charity: Equatable {
             let charityState = jsonObject["state"] as? String,
             let charityZip = jsonObject["zipCode"] as? String,
             let charityDescription = jsonObject["missionStatement"] as? String,
+            let charityAccept = jsonObject["acceptingDonations"] as? Int,
             let charityDonate = jsonObject["donationUrl"] as? String else {
                 return nil
         }
         
         
-        self.init(name: charityName, category: charityCategory, city: charityCity, state: charityState, zip: charityZip, description: charityDescription, donate: charityDonate)
+        self.init(name: charityName.capitalized, category: charityCategory, city: charityCity, state: charityState, zip: charityZip, description: charityDescription, donate: charityDonate, accept: charityAccept)
     }
 }
 

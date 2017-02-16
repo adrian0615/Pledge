@@ -1,32 +1,23 @@
 //
-//  HomeViewController.swift
+//  EventDateViewController.swift
 //  Pledge App
 //
-//  Created by Adrian McDaniel on 2/9/17.
+//  Created by Adrian McDaniel on 2/13/17.
 //  Copyright © 2017 Adrian McDaniel. All rights reserved.
 //
 
 import UIKit
-import CoreLocation
 
-class HomeViewController: UIViewController {
-    
-    
+class EventDateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _ = Timer.scheduledTimer(timeInterval: 6.1, target: self, selector: #selector(self.someSelector), userInfo: nil, repeats: false)
+        title = "Event Date"
+
         // Do any additional setup after loading the view.
     }
-    
-    func someSelector() {
-        
-        let pledgeVC = self.storyboard!.instantiateViewController(withIdentifier: "PledgeTabBarView") as! PledgeTabBarViewController
-        
-        self.present(pledgeVC, animated: true, completion: nil)
-        
-    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -44,4 +35,3 @@ class HomeViewController: UIViewController {
     */
 
 }
-

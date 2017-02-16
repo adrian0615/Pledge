@@ -11,6 +11,7 @@ import Foundation
 
 internal enum IndividualPostResult {
     case success(Individual)
+    case failureLogin(String)
     case failure(IndividualPost.Error)
 }
 
@@ -62,21 +63,21 @@ class IndividualPost {
     
     func processPostLogin(data: Data, error: Swift.Error?) -> IndividualPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            print(object)
+            
             if let individualDict = Individual.init(jsonObject: (object["individual"] as! [String: Any])) {
             return .success(individualDict)
-        } else {
-            return .failure(.system(error!))
+            } else {
+                return .failureLogin(object["errorInfomation"] as! String)
+                }
             }
-        }
-        return .failure(.system(error!))
+            return .failure(.system(error!))
     }
     
     func postRegister(firstName: String, lastName: String, email: String, password: String, completion: @escaping (IndividualPostResult) -> ()) {
         
         let session = URLSession.shared
         
-        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .individualRegistration)
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .individualProfile)
         var request = URLRequest(url: url)
         
         
@@ -112,21 +113,21 @@ class IndividualPost {
     
     func processPostRegister(data: Data, error: Swift.Error?) -> IndividualPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            print(object)
-            if let individualDict = Individual.init(jsonObject: (object["individual"] as! [String: Any])) {
-                return .success(individualDict)
-            } else {
-                return .failure(.system(error!))
+            
+                if let individualDict = Individual.init(jsonObject: (object["individual"] as! [String: Any])) {
+                    return .success(individualDict)
+                } else {
+                    return .failureLogin(object["errorInfomation"] as! String)
             }
         }
         return .failure(.system(error!))
     }
     
-    func postProfile(firstName: String, lastName: String, email: String, userId: Int, completion: @escaping (IndividualPostResult) -> ()) {
+    func postEditProfile(firstName: String, lastName: String, email: String, userId: Int, completion: @escaping (IndividualPostResult) -> ()) {
         
         let session = URLSession.shared
         //Need URL String*********************************************
-        let url = URL(string: "https://")!
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .individualRegistration)
         var request = URLRequest(url: url)
         
         
@@ -162,15 +163,14 @@ class IndividualPost {
     
     func processPostProfile(data: Data, error: Swift.Error?) -> IndividualPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            print(object)
-            if let individualDict = Individual.init(jsonObject: (object["individual"] as! [String: Any])) {
-                return .success(individualDict)
-            } else {
-                return .failure(.system(error!))
-                
+            
+                if let individualDict = Individual.init(jsonObject: (object["individual"] as! [String: Any])) {
+                    return .success(individualDict)
+                } else {
+                    return .failureLogin(object["errorInfomation"] as! String)
+                }
             }
-        }
-        return .failure(.system(error!))
+            return .failure(.system(error!))
     }
         
 }

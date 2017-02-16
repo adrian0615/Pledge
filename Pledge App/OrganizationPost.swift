@@ -11,6 +11,7 @@ import Foundation
 
 internal enum OrganizationPostResult {
     case success(Organization)
+    case failureLogin(String)
     case failure(OrganizationPost.Error)
 }
 
@@ -62,21 +63,20 @@ class OrganizationPost {
     
     func processPostLogin(data: Data, error: Swift.Error?) -> OrganizationPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            print(object)
-            if let organizationDict = Organization.init(jsonObject: (object["individual"] as! [String: Any])) {
+            
+            if let organizationDict = Organization.init(jsonObject: (object["organization"] as! [String: Any])) {
                 return .success(organizationDict)
-            } else {
-                return .failure(.system(error!))
-                
+                } else {
+                    return .failureLogin(object["errorInfomation"] as! String)
+                }
             }
-        }
-        return .failure(.system(error!))
+            return .failure(.system(error!))
     }
     
     func postRegister(name: String, address: String, city: String, state: String, zip: Int, email: String, password: String, completion: @escaping (OrganizationPostResult) -> ()) {
         
         let session = URLSession.shared
-        //Need URL String
+        
         let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .organizationRegistration)
         var request = URLRequest(url: url)
         
@@ -113,22 +113,21 @@ class OrganizationPost {
     
     func processPostRegister(data: Data, error: Swift.Error?) -> OrganizationPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            print(object)
-            if let organizationDict = Organization.init(jsonObject: (object["individual"] as! [String: Any])) {
-                return .success(organizationDict)
-            } else {
-                return .failure(.system(error!))
-                
+            
+                if let organizationDict = Organization.init(jsonObject: (object["organization"] as! [String: Any])) {
+                    return .success(organizationDict)
+                } else {
+                    return .failureLogin(object["errorInfomation"] as! String)
+                }
             }
-        }
-        return .failure(.system(error!))
+            return .failure(.system(error!))
     }
     
-    func postProfile(name: String, address: String, city: String, state: String, zip: Int, email: String, userId: Int, completion: @escaping (OrganizationPostResult) -> ()) {
+    func postEditProfile(name: String, address: String, city: String, state: String, zip: Int, email: String, userId: Int, completion: @escaping (OrganizationPostResult) -> ()) {
         
         let session = URLSession.shared
-        //Need URL String*********************************************
-        let url = URL(string: "https://")!
+        
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .organizationProfile)
         var request = URLRequest(url: url)
         
         
@@ -164,14 +163,13 @@ class OrganizationPost {
     
     func processPostProfile(data: Data, error: Swift.Error?) -> OrganizationPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            print(object)
-            if let organizationDict = Organization.init(jsonObject: (object["individual"] as! [String: Any])) {
-                return .success(organizationDict)
-            } else {
-                return .failure(.system(error!))
-                
+            
+                if let organizationDict = Organization.init(jsonObject: (object["organization"] as! [String: Any])) {
+                    return .success(organizationDict)
+                } else {
+                    return .failureLogin(object["errorInfomation"] as! String)
+                }
             }
-        }
-        return .failure(.system(error!))
+            return .failure(.system(error!))
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class Event : Equatable {
     public static func == (lhs: Event, rhs: Event) -> Bool {
-        return lhs.name == rhs.name && lhs.host == rhs.host && lhs.hostId == rhs.hostId && lhs.address == rhs.address && lhs.city == rhs.city && lhs.state == rhs.state && lhs.zip == rhs.zip && lhs.eventId == rhs.eventId && lhs.location == rhs.location && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime && lhs.details == rhs.details && lhs.type == rhs.type
+        return lhs.name == rhs.name && lhs.host == rhs.host && lhs.hostId == rhs.hostId && lhs.address == rhs.address && lhs.city == rhs.city && lhs.state == rhs.state && lhs.zip == rhs.zip && lhs.eventId == rhs.eventId && lhs.location == rhs.location && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime && lhs.details == rhs.details && lhs.type == rhs.type && lhs.userIds == rhs.userIds
     }
     
     var name: String
@@ -27,9 +27,10 @@ class Event : Equatable {
     var endTime: TimeInterval
     var details: String
     var type: String
+    var userIds: [Int]
     //Maybe startTime and endTime aren't time intervals...  Could need to add dates and times.
     
-    init(name: String, host: String, hostId: Int, eventId: Int, photo: UIImage, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, type: String) {
+    init(name: String, host: String, hostId: Int, eventId: Int, photo: UIImage, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, type: String, userIds: [Int]) {
         self.name = name
         self.host = host
         self.hostId = hostId
@@ -44,6 +45,7 @@ class Event : Equatable {
         self.endTime = endTime
         self.details = details
         self.type = type
+        self.userIds = userIds
         
     }
     
@@ -64,7 +66,8 @@ class Event : Equatable {
             let eventID = jsonObject["eventId"] as? Int,
             let eventType = jsonObject["type"] as? String,
             let eventStart = jsonObject["startTime"] as? TimeInterval,
-            let eventEnd = jsonObject["endTime"] as? TimeInterval else {
+            let eventEnd = jsonObject["endTime"] as? TimeInterval,
+            let eventUserIds = jsonObject["userIds"] as? [Int] else {
                 
                 return nil
                 
@@ -76,7 +79,7 @@ class Event : Equatable {
             volunteerPhoto = UIImage(data: imageData!)
         }
         //Maybe convert Dates here
-        self.init(name: eventName, host: eventHost, hostId: eventHostID, eventId: eventID, photo: volunteerPhoto!, location: eventLocation, address: eventAddress, city: eventCity, state: eventState, zip: eventZip, startTime: eventStart, endTime: eventEnd, details: eventDetails, type: eventType)
+        self.init(name: eventName, host: eventHost, hostId: eventHostID, eventId: eventID, photo: volunteerPhoto!, location: eventLocation, address: eventAddress, city: eventCity, state: eventState, zip: eventZip, startTime: eventStart, endTime: eventEnd, details: eventDetails, type: eventType, userIds: eventUserIds)
     }
 }
 
