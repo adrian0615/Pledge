@@ -28,12 +28,12 @@ class EventsTableViewController: UITableViewController {
     
     let startDateFormatter = DateFormatter()
     let startTimeFormatter = DateFormatter()
-
+    
     
     let eventCellIdentifier = "EventCell"
     
     
-   
+    
     
     func mustLogin(action: UIAlertAction!) {
         let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
@@ -44,21 +44,7 @@ class EventsTableViewController: UITableViewController {
         return
     }
     
-    func addButtonTapped(_ sender: UIBarButtonItem) {
-        
-        if !isUserLoggedIn {
-            let ac = UIAlertController(title: "Must Login to Add Event", message: nil, preferredStyle: .alert)
-            
-            ac.addAction(UIAlertAction(title: "OK", style: .default, handler:mustLogin))
-            
-            self.present(ac, animated: true)
-        }
-        
-        let addEventVC = self.storyboard!.instantiateViewController(withIdentifier: "AddEventView") as! AddEventViewController
-        self.navigationController?.pushViewController(addEventVC, animated:
-            true)
-        
-        }
+    
     
     func logoutButtonTapped(_ sender: UIBarButtonItem) {
         
@@ -84,17 +70,17 @@ class EventsTableViewController: UITableViewController {
     
     
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Events"
         
         if isUserLoggedIn {
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title:
-            "Logout", style: .plain, target: self, action:
-            #selector(logoutButtonTapped))
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title:
+                "Logout", style: .plain, target: self, action:
+                #selector(logoutButtonTapped))
             
         } else {
             
@@ -103,10 +89,8 @@ class EventsTableViewController: UITableViewController {
                 #selector(loginButtonTapped))
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title:
-            "Add Event", style: .plain, target: self, action:
-            #selector(addButtonTapped))
-
+        
+        
         eventStore.fetchUpcomingEvents { result in
             switch result {
             case let .success(array) :
@@ -127,19 +111,19 @@ class EventsTableViewController: UITableViewController {
         self.update()
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return events.count
@@ -169,10 +153,7 @@ class EventsTableViewController: UITableViewController {
         let eventVC = self.storyboard!.instantiateViewController(withIdentifier: "EventView") as! EventViewController
         
         eventVC.event = events[indexPath.row]
-        eventVC.individual = individual
-        eventVC.organization = organization
-        eventVC.individualPost = individualPost
-        eventVC.organizationPost = organizationPost
+        
         
         
         self.navigationController?.pushViewController(eventVC, animated:
@@ -189,5 +170,5 @@ class EventsTableViewController: UITableViewController {
             return
         }
     }
-
+    
 }

@@ -26,7 +26,7 @@ class EventPost {
         
         let session = URLSession.shared
         
-        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: . rsvpEvent)
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .rsvpEvent)
         var request = URLRequest(url: url)
         
         
@@ -43,7 +43,7 @@ class EventPost {
             
             if let data = optionalData {
                 print(data)
-                completion(self.processPostRSVP(data: data, error: optionalError))
+                completion(self.processPost(data: data, error: optionalError))
                 
                 
             } else if let response = optionalResponse {
@@ -60,7 +60,161 @@ class EventPost {
         task.resume()
     }
     
-    func processPostRSVP(data: Data, error: Swift.Error?) -> EventPostResult {
+    func postMyEvents(userId: Int, completion: @escaping (EventPostResult) -> ()) {
+        
+        let session = URLSession.shared
+        
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .myEvents)
+        var request = URLRequest(url: url)
+        
+        
+        request.httpMethod = "POST"
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        
+        
+        let payload = try! JSONSerialization.data(withJSONObject: ["userId": userId], options: [])
+        request.httpBody = payload
+        
+        let task = session.dataTask(with: request) { (optionalData, optionalResponse, optionalError) in
+            
+            if let data = optionalData {
+                print(data)
+                completion(self.processPost(data: data, error: optionalError))
+                
+                
+            } else if let response = optionalResponse {
+                let error = Error.http(response as! HTTPURLResponse)
+                completion(.failure(error))
+                
+                
+                print("optionalResponse: \(optionalResponse)")
+                
+            } else {
+                completion(.failure(.system(optionalError!)))
+            }
+        }
+        task.resume()
+    }
+    
+    
+    func postCreateEvent(name: String, type: String, host: String, userId: Int, hostId: Int, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, completion: @escaping (EventPostResult) -> ()) {
+        
+        let session = URLSession.shared
+        
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .createEvent)
+        var request = URLRequest(url: url)
+        
+        
+        request.httpMethod = "POST"
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        
+        
+        let payload = try! JSONSerialization.data(withJSONObject: ["name": name, "type": type, "host": host, "hostId": hostId, "userId": userId, "location": location, "address": address, "city": city, "state": state, "zip": zip, "startTime": startTime, "endTime": endTime, "details": details], options: [])
+        request.httpBody = payload
+        
+        let task = session.dataTask(with: request) { (optionalData, optionalResponse, optionalError) in
+            
+            if let data = optionalData {
+                print(data)
+                completion(self.processPost(data: data, error: optionalError))
+                
+                
+            } else if let response = optionalResponse {
+                let error = Error.http(response as! HTTPURLResponse)
+                completion(.failure(error))
+                
+                
+                print("optionalResponse: \(optionalResponse)")
+                
+            } else {
+                completion(.failure(.system(optionalError!)))
+            }
+        }
+        task.resume()
+    }
+    
+    func postEditEvent(name: String, type: String, host: String, userId: Int, hostId: Int, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, eventId: Int, completion: @escaping (EventPostResult) -> ()) {
+        
+        let session = URLSession.shared
+        
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .editEvent)
+        var request = URLRequest(url: url)
+        
+        
+        request.httpMethod = "POST"
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        
+        
+        let payload = try! JSONSerialization.data(withJSONObject: ["name": name, "type": type, "host": host, "hostId": hostId, "userId": userId, "location": location, "address": address, "city": city, "state": state, "zip": zip, "startTime": startTime, "endTime": endTime, "details": details, "eventId": eventId], options: [])
+        request.httpBody = payload
+        
+        let task = session.dataTask(with: request) { (optionalData, optionalResponse, optionalError) in
+            
+            if let data = optionalData {
+                print(data)
+                completion(self.processPost(data: data, error: optionalError))
+                
+                
+            } else if let response = optionalResponse {
+                let error = Error.http(response as! HTTPURLResponse)
+                completion(.failure(error))
+                
+                
+                print("optionalResponse: \(optionalResponse)")
+                
+            } else {
+                completion(.failure(.system(optionalError!)))
+            }
+        }
+        task.resume()
+    }
+    
+    func postDeleteEvent(userId: Int, eventId: Int, completion: @escaping (EventPostResult) -> ()) {
+        
+        let session = URLSession.shared
+        
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .deleteEvent)
+        var request = URLRequest(url: url)
+        
+        
+        request.httpMethod = "POST"
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        
+        
+        let payload = try! JSONSerialization.data(withJSONObject: ["userId": userId, "eventId": eventId], options: [])
+        request.httpBody = payload
+        
+        let task = session.dataTask(with: request) { (optionalData, optionalResponse, optionalError) in
+            
+            if let data = optionalData {
+                print(data)
+                completion(self.processPost(data: data, error: optionalError))
+                
+                
+            } else if let response = optionalResponse {
+                let error = Error.http(response as! HTTPURLResponse)
+                completion(.failure(error))
+                
+                
+                print("optionalResponse: \(optionalResponse)")
+                
+            } else {
+                completion(.failure(.system(optionalError!)))
+            }
+        }
+        task.resume()
+    }
+    
+    
+    func processPost(data: Data, error: Swift.Error?) -> EventPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
             
             if let eventArray = Event.array(from: object["events"] as! [[String: Any]]) {
@@ -74,8 +228,7 @@ class EventPost {
     
     
     
-    //Your Events
-    //Your Host Events
+    
     //Create Event
     //Edit Event
     //Delete Event

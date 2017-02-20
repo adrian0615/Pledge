@@ -1,14 +1,14 @@
 //
-//  EventDateViewController.swift
+//  EditEventDateViewController.swift
 //  Pledge App
 //
-//  Created by Adrian McDaniel on 2/13/17.
+//  Created by Adrian McDaniel on 2/20/17.
 //  Copyright © 2017 Adrian McDaniel. All rights reserved.
 //
 
 import UIKit
 
-class EventDateViewController: UIViewController {
+class EditEventDateViewController: UIViewController {
     
     @IBOutlet var startDatePicker: UIDatePicker!
     @IBOutlet var endDatePicker: UIDatePicker!
@@ -23,13 +23,15 @@ class EventDateViewController: UIViewController {
     @IBAction func enterButtonTapped(_ sender: Any) {
         
         
-        let addEventVC = self.storyboard!.instantiateViewController(withIdentifier: "AddEventView") as! AddEventViewController
-        
-        addEventVC.startDate = startDatePicker.date
-        addEventVC.endDate = endDatePicker.date
         
         
-        self.navigationController?.pushViewController(addEventVC, animated:
+        let editEventVC = self.storyboard!.instantiateViewController(withIdentifier: "EditEventView") as! EditEventViewController
+        
+        editEventVC.startDate = startDatePicker.date
+        editEventVC.endDate = endDatePicker.date
+        
+        
+        self.navigationController?.pushViewController(editEventVC, animated:
             true)
     }
     
@@ -37,7 +39,7 @@ class EventDateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Event Times"
+        title = "Edit Times"
         
         
         
@@ -47,6 +49,5 @@ class EventDateViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
-    
     
 }

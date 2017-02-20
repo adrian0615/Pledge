@@ -11,37 +11,34 @@ import CoreLocation
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet var pledgeLogoImage: UIImageView!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _ = Timer.scheduledTimer(timeInterval: 6.1, target: self, selector: #selector(self.someSelector), userInfo: nil, repeats: false)
+        _ = Timer.scheduledTimer(timeInterval: 3.1, target: self, selector: #selector(self.logo), userInfo: nil, repeats: false)
         // Do any additional setup after loading the view.
     }
     
+    func logo() {
+        pledgeLogoImage.image = UIImage(named: "pledge-logo")
+        _ = Timer.scheduledTimer(timeInterval: 3.1, target: self, selector: #selector(self.someSelector), userInfo: nil, repeats: false)
+    }
+    
+
+    
     func someSelector() {
         
-        let pledgeVC = self.storyboard!.instantiateViewController(withIdentifier: "PledgeTabBarView") as! PledgeTabBarViewController
+        let pledgeVC = self.storyboard!.instantiateViewController(withIdentifier: "tabBarController") as! PledgeTabBarViewController
         
         self.present(pledgeVC, animated: true, completion: nil)
         
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

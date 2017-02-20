@@ -22,7 +22,7 @@ class FundraiserViewController: UIViewController {
     let startTimeFormatter = DateFormatter()
     
     
-
+    
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var addressLabel: UILabel!
@@ -64,21 +64,21 @@ class FundraiserViewController: UIViewController {
         
         
         titleLabel.text = fundraiser?.title
-        dateLabel.text = "\(startDateFormatter.string(from: beginDate!))   \(startTimeFormatter.string(from: beginDate!))" 
+        dateLabel.text = "\(startDateFormatter.string(from: beginDate!))   \(startTimeFormatter.string(from: beginDate!))"
         
         
         location = CLLocation(latitude: (fundraiser?.coordinates[1])!, longitude: (fundraiser?.coordinates[0])!)
         
         fundraiserLocation(location: location)
-
-        // Do any additional setup after loading the view.
+        
+        
     }
     
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
     func fundraiserLocation(location: CLLocation) {
@@ -97,15 +97,7 @@ class FundraiserViewController: UIViewController {
         })
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
+    
 }

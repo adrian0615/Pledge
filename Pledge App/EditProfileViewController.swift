@@ -95,7 +95,7 @@ class EditProfileViewController: UIViewController {
                     print("failed to Make Changes: \(error)")
                     self.displayMyAlertMessage(userMessage: "Failed to Make Changes.  Try again.")
                 }
-                }
+            }
         } else {
             if (firstNameField.text?.isEmpty)! || (familyNameField.text?.isEmpty)! || (emailField.text?.isEmpty)!  {
                 
@@ -105,53 +105,53 @@ class EditProfileViewController: UIViewController {
             }
             
             
-                    let firstName = firstNameField.text
-                    let lastName = familyNameField.text
-                    let email = emailField.text
+            let firstName = firstNameField.text
+            let lastName = familyNameField.text
+            let email = emailField.text
+            
+            individualPost.postEditProfile(firstName: firstName!, lastName: lastName!, email: email! , userId: userId) { profileResult in
+                switch profileResult {
+                case let .success(result) :
                     
-                    individualPost.postEditProfile(firstName: firstName!, lastName: lastName!, email: email! , userId: userId) { profileResult in
-                        switch profileResult {
-                        case let .success(result) :
+                    OperationQueue.main.addOperation {
+                        self.individual = result
+                        UserDefaults.standard.set(email, forKey: "email")
+                        UserDefaults.standard.set(self.individual?.firstName, forKey: "firstName")
+                        UserDefaults.standard.set(self.individual?.lastName, forKey: "lastName")
+                        UserDefaults.standard.synchronize()
+                        
+                        let myAlert = UIAlertController(title: "Alert", message: "Profile Saved", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
                             
-                            OperationQueue.main.addOperation {
-                                self.individual = result
-                                UserDefaults.standard.set(email, forKey: "email")
-                                UserDefaults.standard.set(self.individual?.firstName, forKey: "firstName")
-                                UserDefaults.standard.set(self.individual?.lastName, forKey: "lastName")
-                                UserDefaults.standard.synchronize()
-                                
-                                let myAlert = UIAlertController(title: "Alert", message: "Profile Saved", preferredStyle: .alert)
-                                let okAction = UIAlertAction(title: "OK", style: .default) { action in
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    let profileVC = self.storyboard!.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
-                                    
-                                    self.navigationController?.pushViewController(profileVC, animated:
-                                        true)
-                                }
-                                
-                                myAlert.addAction(okAction)
-                                
-                                self.present(myAlert, animated: true, completion: nil)
-                            }
                             
-                        case let .failureLogin(badLogin) :
-                            self.displayMyAlertMessage(userMessage: "Failed to Make Changes.  \(badLogin).")
                             
-                        case let .failure(error) :
-                            print("failed edit profile: \(error)")
-                            self.displayMyAlertMessage(userMessage: "Failed to Make Changes.  Try again.")
+                            
+                            
+                            let profileVC = self.storyboard!.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
+                            
+                            self.navigationController?.pushViewController(profileVC, animated:
+                                true)
                         }
                         
+                        myAlert.addAction(okAction)
+                        
+                        self.present(myAlert, animated: true, completion: nil)
                     }
+                    
+                case let .failureLogin(badLogin) :
+                    self.displayMyAlertMessage(userMessage: "Failed to Make Changes.  \(badLogin).")
+                    
+                case let .failure(error) :
+                    print("failed edit profile: \(error)")
+                    self.displayMyAlertMessage(userMessage: "Failed to Make Changes.  Try again.")
                 }
+                
             }
+        }
+    }
     
-
-
+    
+    
     
     
     override func viewDidLoad() {

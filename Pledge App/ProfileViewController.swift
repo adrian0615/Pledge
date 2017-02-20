@@ -44,7 +44,7 @@ class ProfileViewController: UIViewController {
             true)
     }
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,60 +58,69 @@ class ProfileViewController: UIViewController {
             
             self.present(acNoNetwork, animated: true)
             
-        }
-        
             
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title:
-                "Edit", style: .plain, target: self, action:
-                #selector(editButtonTapped))
-            
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title:
-                "Logout", style: .plain, target: self, action:
-                #selector(logoutButtonTapped))
-        
-        let userType = UserDefaults.standard.string(forKey: "type")
-        
-        
-        
-        
-        if userType == "individual" {
+            firstNameLabel.isHidden = true
+            familyNameLabel.isHidden = true
+            emailLabel.isHidden = true
             addressLabel.isHidden = true
             cityLabel.isHidden = true
             stateLabel.isHidden = true
             zipLabel.isHidden = true
             
+        }
         
-            let userFirstName = UserDefaults.standard.string(forKey: "firstName")
-            let userLastName = UserDefaults.standard.string(forKey: "lastName")
-            let userEmail = UserDefaults.standard.string(forKey: "email")
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title:
+            "Edit", style: .plain, target: self, action:
+            #selector(editButtonTapped))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title:
+            "Logout", style: .plain, target: self, action:
+            #selector(logoutButtonTapped))
+        
+        let userType = UserDefaults.standard.string(forKey: "type")
+        
+        
+        if isUserLoggedIn {
             
-            firstNameLabel.text = userFirstName
-            familyNameLabel.text = userLastName
-            emailLabel.text = userEmail
-        } else {
-            firstNameLabel.isHidden = true
-    
-            let userName = UserDefaults.standard.string(forKey: "name")
-            let userEmail = UserDefaults.standard.string(forKey: "email")
-            let userAddress = UserDefaults.standard.string(forKey: "address")
-            let userCity = UserDefaults.standard.string(forKey: "city")
-            let userState = UserDefaults.standard.string(forKey: "state")
-            let userZip = UserDefaults.standard.integer(forKey: "zip")
-            
-            familyNameLabel.text = userName
-            emailLabel.text = userEmail
-            addressLabel.text = userAddress
-            cityLabel.text = userCity
-            stateLabel.text = userState
-            zipLabel.text = String(userZip)
-            
+            if userType == "individual" {
+                addressLabel.isHidden = true
+                cityLabel.isHidden = true
+                stateLabel.isHidden = true
+                zipLabel.isHidden = true
+                
+                
+                let userFirstName = UserDefaults.standard.string(forKey: "firstName")
+                let userLastName = UserDefaults.standard.string(forKey: "lastName")
+                let userEmail = UserDefaults.standard.string(forKey: "email")
+                
+                firstNameLabel.text = userFirstName
+                familyNameLabel.text = userLastName
+                emailLabel.text = userEmail
+            } else {
+                firstNameLabel.isHidden = true
+                
+                let userName = UserDefaults.standard.string(forKey: "name")
+                let userEmail = UserDefaults.standard.string(forKey: "email")
+                let userAddress = UserDefaults.standard.string(forKey: "address")
+                let userCity = UserDefaults.standard.string(forKey: "city")
+                let userState = UserDefaults.standard.string(forKey: "state")
+                let userZip = UserDefaults.standard.integer(forKey: "zip")
+                
+                familyNameLabel.text = userName
+                emailLabel.text = userEmail
+                addressLabel.text = userAddress
+                cityLabel.text = userCity
+                stateLabel.text = userState
+                zipLabel.text = String(userZip)
+                
             }
-        
-        
             
         }
-
-        // Do any additional setup after loading the view.
+        
+    }
+    
+    
     
     func mustLogin(action: UIAlertAction!) {
         let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
@@ -121,21 +130,11 @@ class ProfileViewController: UIViewController {
         
         return
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

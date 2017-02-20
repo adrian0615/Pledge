@@ -1,8 +1,8 @@
 //
-//  EventViewController.swift
+//  MyEventViewController.swift
 //  Pledge App
 //
-//  Created by Adrian McDaniel on 2/11/17.
+//  Created by Adrian McDaniel on 2/20/17.
 //  Copyright © 2017 Adrian McDaniel. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import CoreLocation
 import AddressBookUI
 
 
-class EventViewController: UIViewController {
+class MyEventViewController: UIViewController {
     
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     
@@ -39,7 +39,8 @@ class EventViewController: UIViewController {
     @IBOutlet var detailsLabel: UILabel!
     @IBOutlet var eventMap: MKMapView!
     @IBOutlet var hostLabel: UILabel!
-    @IBOutlet var rsvpButton: UIButton!
+    @IBOutlet var deleteButton: UIButton!
+    
     
     
     var pointAnnotation:MKPointAnnotation!
@@ -55,12 +56,13 @@ class EventViewController: UIViewController {
             true)
     }
     
-    @IBAction func rsvpButtonTapped(_ sender: Any) {
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
         
         
         // if not logged in
         if !isUserLoggedIn {
-            let ac = UIAlertController(title: "Must Login to RSVP", message: nil, preferredStyle: .alert)
+            let ac = UIAlertController(title: "Must Login to Delete", message: nil, preferredStyle: .alert)
             
             ac.addAction(UIAlertAction(title: "OK", style: .default, handler:mustLogin))
             
@@ -75,16 +77,48 @@ class EventViewController: UIViewController {
             self.present(ac, animated: true)
         }
         
-        let ac = UIAlertController(title: "Attend \(event!.name)?", message: nil, preferredStyle: .alert)
         
-        ac.addAction(UIAlertAction(title: "Yes", style: .default, handler:yesRSVP))
-        ac.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-        self.present(ac, animated: true)
     }
     
     func editButtonTapped(_ sender: UIBarButtonItem) {
-        print("button tapped")
-        //Go to edit event page
+        
+        if !isUserLoggedIn {
+            let ac = UIAlertController(title: "Must Login to Edit Event", message: nil, preferredStyle: .alert)
+            
+            ac.addAction(UIAlertAction(title: "OK", style: .default, handler:mustLogin))
+            
+            self.present(ac, animated: true)
+        }
+        
+        let editEventVC = self.storyboard!.instantiateViewController(withIdentifier: "EditEventView") as! EditEventViewController
+        
+        editEventVC.nameField.text = event?.name
+        editEventVC.typeField.text = event?.type
+        editEventVC.hostField.text = event?.host
+        editEventVC.addressField.text = event?.address
+        editEventVC.cityField.text = event?.city
+        editEventVC.stateField.text = event?.state
+        editEventVC.zipField.text = "\(event?.zip)"
+        editEventVC.details = (event?.details)!
+        editEventVC.eventId = event?.eventId
+        
+        startTimeFormatter.dateStyle = .medium
+        startTimeFormatter.timeStyle = .short
+        endTimeFormatter.dateStyle = .medium
+        endTimeFormatter.timeStyle = .short
+        
+        let startTime = startTimeFormatter.string(from: Date(timeIntervalSince1970: (event!.startTime) / 1000))
+        
+        let endTime = endTimeFormatter.string(from: Date(timeIntervalSince1970: (event!.endTime) / 1000))
+        
+        editEventVC.startDate = startTimeFormatter.date(from: startTime)!
+        editEventVC.endDate = endTimeFormatter.date(from: endTime)!
+        
+        
+        
+        
+        self.navigationController?.pushViewController(editEventVC, animated:
+            true)
     }
     
     
@@ -94,29 +128,21 @@ class EventViewController: UIViewController {
         
         
         
-        
-        title = "Event"
-        
         if isUserLoggedIn {
             
             if event?.hostId == hostId {
                 title = "Hosting"
-                rsvpButton.setTitle("Delete Event", for: .normal)
                 
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title:
                     "Edit", style: .plain, target: self, action:
                     #selector(editButtonTapped))
             }
             
-            if userType == "organization" && event?.hostId != hostId  {
-                rsvpButton.isHidden = true
-                
-            }
             if userType == "individual" {
                 
                 if event!.userIds.contains(userId) {
                     title = "Attending"
-                    rsvpButton.isHidden = true
+                    deleteButton.isHidden = true
                 }
             }
         }
@@ -128,7 +154,7 @@ class EventViewController: UIViewController {
         
         let startDate = startDateFormatter.string(from: Date(timeIntervalSince1970: (event!.startTime) / 1000))
         
-        let endDate = endDateFormatter.string(from: Date(timeIntervalSince1970: (event!.startTime) / 1000))
+        let endDate = endDateFormatter.string(from: Date(timeIntervalSince1970: (event!.endTime) / 1000))
         
         eventNameLabel?.text = event?.name
         typeLabel?.text = event?.type.capitalized
@@ -181,23 +207,28 @@ class EventViewController: UIViewController {
         return
     }
     
-    func yesRSVP(action: UIAlertAction!) {
+    
+    
+    func yesDelete(action: UIAlertAction!) {
         
         
-        eventPost.postRSVP(userId: userId, eventId: (event?.eventId)!) { result in
+        eventPost.postDeleteEvent(userId: userId, eventId: (event?.eventId)!) { result in
+            
             switch result {
             case let .success(array) :
-                
-                
                 OperationQueue.main.addOperation {
-                    let myAlert = UIAlertController(title: "RSVP Successful", message: nil, preferredStyle: .alert)
+                    
+                    
+                    let myAlert = UIAlertController(title: "Success", message: "Event Deleted", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                        
                         
                         let myEventsVC = self.storyboard!.instantiateViewController(withIdentifier: "MyEventsView") as! EventsTableViewController
                         
                         myEventsVC.events = array
                         
-                        self.tabBarController?.selectedIndex = 1
+                        self.navigationController?.pushViewController(myEventsVC, animated:
+                            true)
                     }
                     
                     myAlert.addAction(okAction)
@@ -206,26 +237,33 @@ class EventViewController: UIViewController {
                 }
                 
             case let .failureLogin(error) :
-                print("failed to RSVP: \(error)")
+                print("Failed to Save Event \(error)")
+                
+                self.displayMyAlertMessage(userMessage: "Unable to Delete Event.  Try Again.")
                 
                 
             case let .failure(error) :
-                print("failed to RSVP: \(error)")
+                print("Failed to Save Event \(error)")
+                
+                self.displayMyAlertMessage(userMessage: "Unable to Delete Event.  Try Again.")
             }
         }
-        
     }
     
-    func yesDelete(action: UIAlertAction!) {
-        //Delete event closure
+    func displayMyAlertMessage(userMessage: String) {
         
-        let eventsVC = self.storyboard!.instantiateViewController(withIdentifier: "EventsView") as! EventsTableViewController
-        
-        self.navigationController?.pushViewController(eventsVC, animated:
-            true)
-        return
+        OperationQueue.main.addOperation {
+            
+            let myAlert = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            myAlert.addAction(action)
+            
+            self.present(myAlert, animated: true, completion: nil)
+            
+            return
+        }
     }
-    
     
     func eventLocationMap(address: String) {
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
@@ -257,5 +295,6 @@ class EventViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
+    
     
 }

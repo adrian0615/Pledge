@@ -26,12 +26,12 @@ class FundraisersTableViewController: UITableViewController {
     let beginDateFormatter = DateFormatter()
     
     let fundraiserCellIdentifier = "FundraiserCell"
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Fundraisers"
-
+        
         fundraiserStore.fetchLocalFundraisers { result in
             switch result {
             case let .success(array) :
@@ -44,26 +44,26 @@ class FundraisersTableViewController: UITableViewController {
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
-
-    // MARK: - Table view data source
-
+    
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        
         return fundraisers.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: fundraiserCellIdentifier, for: indexPath)
         
         let isoStartDate = fundraisers[indexPath.row].start
@@ -114,7 +114,7 @@ class FundraisersTableViewController: UITableViewController {
         
         
     }
-
+    
     func update() {
         OperationQueue.main.addOperation {
             
@@ -122,5 +122,5 @@ class FundraisersTableViewController: UITableViewController {
             return
         }
     }
-
+    
 }

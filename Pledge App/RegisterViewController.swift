@@ -23,14 +23,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet var organizationNameLabel: UILabel!
     @IBOutlet var registerSwitch: UISwitch!
     
-    //Need password Fields to be equal
-    //Want User to be able to choose from a list of states
-    //Integers only in Zip Code Field
-    //family Name Label toggles as company and last Name
-    //addressLabel toggles as address and password
-    //city Label toggles as city and confirmation password
-    //textFields need to be clear when things are toggled
-    //way to hide password
+    
     
     
     
@@ -110,7 +103,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
                         UserDefaults.standard.synchronize()
                         
-                        let myAlert = UIAlertController(title: "Alert", message: "Registration Successful", preferredStyle: .alert)
+                        let myAlert = UIAlertController(title: "Registration Successful", message: nil, preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "OK", style: .default) { action in
                             
                             
@@ -175,7 +168,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
                         UserDefaults.standard.synchronize()
                         
-                        let myAlert = UIAlertController(title: "Alert", message: "Registration Successful", preferredStyle: .alert)
+                        let myAlert = UIAlertController(title: "Registration Successful", message: nil, preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "OK", style: .default) { action in
                             
                             
@@ -293,18 +286,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

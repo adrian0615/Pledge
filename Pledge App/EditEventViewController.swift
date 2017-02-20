@@ -1,65 +1,64 @@
 //
-//  AddEventViewController.swift
+//  EditEventViewController.swift
 //  Pledge App
 //
-//  Created by Adrian McDaniel on 2/12/17.
+//  Created by Adrian McDaniel on 2/20/17.
 //  Copyright © 2017 Adrian McDaniel. All rights reserved.
 //
 
 import UIKit
 
-class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class EditEventViewController: UIViewController{
     
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     let userId = UserDefaults.standard.integer(forKey: "userId")
     let hostId = UserDefaults.standard.integer(forKey: "hostId")
     
     var eventPost = EventPost()
+    var eventId: Int? = nil
     
-    let states = ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KY", "KS", "LA", "LV", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "NE", "ND", "NH", "NJ", "NM", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"]
     
-    let types = ["Event Type", "Arts & Culture", "Activism", "Animal Rights", "Civil Rights", "Community Improvement", "Disaster Relief", "Disability Assistance", "Education", "Elderly Assistance", "Environmental", "Feeding the Less Fortunate", "Housing & Shelter", "Human Rights", "Human Services", "Mental Health", "Public Health", "Public Safety", "Transportation", "Youth Development"]
-    
-    var state: String = " "
-    var type: String = " "
     var details: String = " "
     
-    
+    var type: String = " "
+    var state: String = " "
     
     var startDate = Date()
     var endDate = Date()
     
     @IBOutlet var nameField: UITextField!
-    @IBOutlet var typePicker: UIPickerView!
+    @IBOutlet var typeField: UITextField!
     @IBOutlet var hostField: UITextField!
     @IBOutlet var locationField: UITextField!
     @IBOutlet var addressField: UITextField!
     @IBOutlet var cityField: UITextField!
-    @IBOutlet var statePicker: UIPickerView!
+    @IBOutlet var stateField: UITextField!
     @IBOutlet var zipField: UITextField!
     @IBOutlet var startButton: UIButton!
     @IBOutlet var endButton: UIButton!
     
     @IBAction func startButtonTapped(_ sender: Any) {
-        let eventDateVC = self.storyboard!.instantiateViewController(withIdentifier: "EventDateView") as! EventDateViewController
+        let editEventDateVC = self.storyboard!.instantiateViewController(withIdentifier: "EditEventDateView") as! EditEventDateViewController
         
-        self.navigationController?.pushViewController(eventDateVC, animated:
-            true)
+        self.navigationController?.pushViewController(editEventDateVC, animated: true)
+        
+        
     }
     
     @IBAction func endButtonTapped(_ sender: Any) {
         
-        let eventDateVC = self.storyboard!.instantiateViewController(withIdentifier: "EventDateView") as! EventDateViewController
+        let editEventDateVC = self.storyboard!.instantiateViewController(withIdentifier: "EditEventDateView") as! EditEventDateViewController
         
-        self.navigationController?.pushViewController(eventDateVC, animated:
-            true)
+        self.navigationController?.pushViewController(editEventDateVC, animated: true)
+        
+        
     }
     
     @IBAction func descriptionButtonTapped(_ sender: Any) {
         
-        let eventDescriptionVC = self.storyboard!.instantiateViewController(withIdentifier: "EventDescriptionView") as! EventDescriptionViewController
+        let editEventDescriptionVC = self.storyboard!.instantiateViewController(withIdentifier: "EditEventDescriptionView") as! EditEventDescriptionViewController
         
-        self.navigationController?.pushViewController(eventDescriptionVC, animated:
+        self.navigationController?.pushViewController(editEventDescriptionVC, animated:
             true)
     }
     
@@ -95,8 +94,8 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let endTimeInterval = endDate?.timeIntervalSince1970
         
         
-        
-        eventPost.postCreateEvent(name: name!, type: self.type, host: host!, userId: self.userId, hostId: self.hostId, location: location!, address: address!, city: city!, state: self.state, zip: zip!, startTime: startTimeInterval!, endTime: endTimeInterval!, details: details) { result in
+        ///Needs to be edit event
+        eventPost.postEditEvent(name: name!, type: self.type, host: host!, userId: self.userId, hostId: self.hostId, location: location!, address: address!, city: city!, state: self.state, zip: zip!, startTime: startTimeInterval!, endTime: endTimeInterval!, details: details, eventId: eventId!) { result in
             
             switch result {
             case let .success(array) :
@@ -104,7 +103,7 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     print(array)
                     
                     
-                    let myAlert = UIAlertController(title: "Success", message: "Event Created", preferredStyle: .alert)
+                    let myAlert = UIAlertController(title: "Success", message: "Event Edited", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "OK", style: .default) { action in
                         
                         
@@ -123,15 +122,15 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 
                 
             case let .failureLogin(error) :
-                print("Failed to Save New Event \(error)")
+                print("Failed to Save Event \(error)")
                 
-                self.displayMyAlertMessage(userMessage: "Unable to Save Event.  Try Again.")
+                self.displayMyAlertMessage(userMessage: "Unable to Save Changes.  Try Again.")
                 
                 
             case let .failure(error) :
-                print("Failed to Save New Event \(error)")
+                print("Failed to Save Event \(error)")
                 
-                self.displayMyAlertMessage(userMessage: "Unable to Save Event.  Try Again.")
+                self.displayMyAlertMessage(userMessage: "Unable to Save Changes.  Try Again.")
                 
             }
         }
@@ -152,59 +151,16 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        var count = 0
-        
-        if pickerView == statePicker {
-            count = states.count
-        }
-        
-        if pickerView == typePicker {
-            count = types.count
-        }
-        
-        return count
-    }
     
-    // Delegate
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        var show: String?
-        
-        if pickerView == self.statePicker {
-            show = states[row]
-        }
-        
-        if pickerView == self.typePicker {
-            show = types[row]
-        }
-        return show
-    }
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        
-        
-        if pickerView == statePicker {
-            state = self.states[row]
-        }
-        
-        if pickerView == typePicker {
-            type = self.types[row]
-        }
-    }
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Add Event"
+        title = "Edit Event"
         
         if !isUserLoggedIn {
-            let acNoNetwork = UIAlertController(title: "Must Login to Add Event", message: nil, preferredStyle: .alert)
+            let acNoNetwork = UIAlertController(title: "Must Login to Edit Event", message: nil, preferredStyle: .alert)
             
             acNoNetwork.addAction(UIAlertAction(title: "OK", style: .default, handler: self.mustLogin))
             
@@ -230,11 +186,6 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         startButton.setTitle("\(startFormatter.string(from: startDate))", for: .normal)
         endButton.setTitle("\(endFormatter.string(from: endDate))", for: .normal)
         
-        
-        statePicker.delegate = self
-        statePicker.dataSource = self
-        typePicker.delegate = self
-        typePicker.dataSource = self
         
     }
     

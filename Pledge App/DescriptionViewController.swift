@@ -11,8 +11,11 @@ import UIKit
 class DescriptionViewController: UIViewController {
     
     var fundraiser: Fundraiser? = nil
-
-    @IBOutlet var descriptionLabel: UILabel!
+    var event: Event? = nil
+    
+    
+    
+    @IBOutlet var detailsTextView: UITextView!
     
     
     override func viewDidLoad() {
@@ -20,28 +23,25 @@ class DescriptionViewController: UIViewController {
         
         title = "Description"
         
-        descriptionLabel.text = fundraiser?.description
+        if fundraiser != nil {
+            detailsTextView.text = fundraiser?.description
+        }
         
-
-        // Do any additional setup after loading the view.
+        
+        if event != nil {
+            detailsTextView.text = event?.details
+        }
+        
+        
     }
     
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
 }

@@ -12,11 +12,12 @@ class MyEventsTableViewController: UITableViewController {
     
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     
-    var eventStore = EventStore()
-    var individualPost = IndividualPost()
-    var organizationPost = OrganizationPost()
-    var organization: Organization? = nil
-    var individual: Individual? = nil
+    var eventPost = EventPost()
+    
+    let userType = UserDefaults.standard.string(forKey: "type")
+    let userId = UserDefaults.standard.integer(forKey: "userId")
+    let hostId = UserDefaults.standard.integer(forKey: "hostId")
+    
     
     var events: [Event] = [] {
         didSet {
@@ -27,7 +28,18 @@ class MyEventsTableViewController: UITableViewController {
     let eventCellIdentifier = "MyEventCell"
     
     func addButtonTapped(_ sender: UIBarButtonItem) {
-        print("itworked")
+        
+        if !isUserLoggedIn {
+            let ac = UIAlertController(title: "Must Login to Add Event", message: nil, preferredStyle: .alert)
+            
+            ac.addAction(UIAlertAction(title: "OK", style: .default, handler:mustLogin))
+            
+            self.present(ac, animated: true)
+        }
+        
+        let addEventVC = self.storyboard!.instantiateViewController(withIdentifier: "AddEventView") as! AddEventViewController
+        self.navigationController?.pushViewController(addEventVC, animated:
+            true)
         
     }
     
@@ -65,23 +77,23 @@ class MyEventsTableViewController: UITableViewController {
             "Logout", style: .plain, target: self, action:
             #selector(logoutButtonTapped))
         
-            
-            
-        }
-        /*eventStore.fetchUpcomingEvents { result in
-            switch result {
-            case let .success(array) :
-                print(array)
-                
-                self.events = array
-                
-            case let .failure(error) :
-                print("failed to get events: \(error)")
-            }
-        }*/
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+    }
+    /*eventStore.fetchUpcomingEvents { result in
+     switch result {
+     case let .success(array) :
+     print(array)
+     
+     self.events = array
+     
+     case let .failure(error) :
+     print("failed to get events: \(error)")
+     }
+     }*/
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -131,16 +143,13 @@ class MyEventsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let eventVC = self.storyboard!.instantiateViewController(withIdentifier: "EventView") as! EventViewController
+        let myEventVC = self.storyboard!.instantiateViewController(withIdentifier: "MyEventView") as! MyEventViewController
         
-        eventVC.event = events[indexPath.row]
-        eventVC.individual = individual
-        eventVC.organization = organization
-        eventVC.individualPost = individualPost
-        eventVC.organizationPost = organizationPost
+        myEventVC.event = events[indexPath.row]
         
         
-        self.navigationController?.pushViewController(eventVC, animated:
+        
+        self.navigationController?.pushViewController(myEventVC, animated:
             true)
         
         
@@ -154,5 +163,5 @@ class MyEventsTableViewController: UITableViewController {
             return
         }
     }
-
+    
 }
