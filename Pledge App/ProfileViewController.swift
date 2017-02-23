@@ -78,6 +78,8 @@ class ProfileViewController: UIViewController {
             "Logout", style: .plain, target: self, action:
             #selector(logoutButtonTapped))
         
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
         let userType = UserDefaults.standard.string(forKey: "type")
         
         

@@ -68,7 +68,7 @@ struct PledgeAPI {
             case .deleteEvent:
                 return "delete-event.json"
             case .myEvents:
-                return "your-events.json"
+                return "events-for-individual.json"
             }
         }
         

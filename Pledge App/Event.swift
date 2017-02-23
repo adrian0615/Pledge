@@ -15,9 +15,8 @@ class Event : Equatable {
     
     var name: String
     var host: String
-    let hostId: Int
-    let eventId: Int
-    var photo: UIImage
+    let hostId: String
+    let eventId: String
     var location: String
     var address: String
     var city: String
@@ -27,15 +26,15 @@ class Event : Equatable {
     var endTime: TimeInterval
     var details: String
     var type: String
-    var userIds: [Int]
-    //Maybe startTime and endTime aren't time intervals...  Could need to add dates and times.
+    var userIds: [String]
     
-    init(name: String, host: String, hostId: Int, eventId: Int, photo: UIImage, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, type: String, userIds: [Int]) {
+    
+    init(name: String, host: String, hostId: String, eventId: String, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, type: String, userIds: [String]) {
         self.name = name
         self.host = host
         self.hostId = hostId
         self.eventId = eventId
-        self.photo = photo
+        
         self.location = location
         self.address = address
         self.city = city
@@ -51,8 +50,6 @@ class Event : Equatable {
     
     convenience init?(jsonObject: [String: Any]) {
         
-        //May need imageStore or photoStore
-        let eventPhoto = jsonObject["photo"] as? String
         
         guard let eventName = jsonObject["name"] as? String,
             let eventHost = jsonObject["host"] as? String,
@@ -62,24 +59,19 @@ class Event : Equatable {
             let eventState = jsonObject["state"] as? String,
             let eventZip = jsonObject["zip"] as? Int,
             let eventDetails = jsonObject["details"] as? String,
-            let eventHostID = jsonObject["hostId"] as? Int,
-            let eventID = jsonObject["eventId"] as? Int,
+            let eventHostID = jsonObject["hostId"] as? String,
+            let eventID = jsonObject["id"] as? String,
             let eventType = jsonObject["type"] as? String,
             let eventStart = jsonObject["startTime"] as? TimeInterval,
             let eventEnd = jsonObject["endTime"] as? TimeInterval,
-            let eventUserIds = jsonObject["userIds"] as? [Int] else {
+            let eventUserIds = jsonObject["userIds"] as? [String] else {
                 
                 return nil
                 
         }
         
-        var volunteerPhoto = UIImage(named: "volunteer")
-        if eventPhoto != nil {
-            let imageData = Data(base64Encoded: eventPhoto!)
-            volunteerPhoto = UIImage(data: imageData!)
-        }
-        //Maybe convert Dates here
-        self.init(name: eventName, host: eventHost, hostId: eventHostID, eventId: eventID, photo: volunteerPhoto!, location: eventLocation, address: eventAddress, city: eventCity, state: eventState, zip: eventZip, startTime: eventStart, endTime: eventEnd, details: eventDetails, type: eventType, userIds: eventUserIds)
+       
+        self.init(name: eventName, host: eventHost, hostId: eventHostID, eventId: eventID, location: eventLocation, address: eventAddress, city: eventCity, state: eventState, zip: eventZip, startTime: eventStart, endTime: eventEnd, details: eventDetails, type: eventType, userIds: eventUserIds)
     }
 }
 

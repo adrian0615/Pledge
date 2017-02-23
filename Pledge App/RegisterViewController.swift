@@ -82,6 +82,10 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             let email = emailField.text
             let password = passwordField.text
             
+            if state == " " {
+                state = "AK"
+            }
+            
             self.organizationPost.postRegister(name: name!, address: address!, city: city!, state: self.state, zip: Int(zip!)!, email: email!, password: password!) { registerResult in
                 
                 switch registerResult {
@@ -94,7 +98,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         UserDefaults.standard.set(email, forKey: "email")
                         UserDefaults.standard.set(password, forKey: "userPassword")
                         UserDefaults.standard.set(self.organization?.userId, forKey: "userId")
-                        UserDefaults.standard.set(self.organization?.hostId, forKey: "hostId")
+                        UserDefaults.standard.set(self.organization?.userId, forKey: "hostId")
                         UserDefaults.standard.set(self.organization?.name, forKey: "name")
                         UserDefaults.standard.set(self.organization?.address, forKey: "address")
                         UserDefaults.standard.set(self.organization?.city, forKey: "city")
@@ -162,7 +166,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         UserDefaults.standard.set(email, forKey: "email")
                         UserDefaults.standard.set(password, forKey: "userPassword")
                         UserDefaults.standard.set(self.individual?.userId, forKey: "userId")
-                        UserDefaults.standard.set(self.individual?.hostId, forKey: "hostId")
+                        UserDefaults.standard.set(self.individual?.userId, forKey: "hostId")
                         UserDefaults.standard.set(self.individual?.firstName, forKey: "firstName")
                         UserDefaults.standard.set(self.individual?.lastName, forKey: "lastName")
                         UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
@@ -240,6 +244,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         showIndividual()
         
+        navigationController?.navigationBar.tintColor = UIColor.white
         
     }
     

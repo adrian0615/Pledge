@@ -10,6 +10,8 @@ import UIKit
 
 class EventsTableViewController: UITableViewController {
     
+    
+    
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     
     var eventStore = EventStore()
@@ -18,6 +20,7 @@ class EventsTableViewController: UITableViewController {
     var individual: Individual? = nil
     var organization: Organization? = nil
     
+    var coordinate: String = "33.7523938,-84.3915388"
     
     
     var events: [Event] = [] {
@@ -32,8 +35,16 @@ class EventsTableViewController: UITableViewController {
     
     let eventCellIdentifier = "EventCell"
     
+   
     
-    
+    @IBAction func searchBarTapped(_ sender: UIBarButtonItem) {
+        let eventSearchVC = self.storyboard!.instantiateViewController(withIdentifier: "EventSearchView") as! EventSearchViewController
+        
+        eventSearchVC.events = events
+        
+        self.navigationController?.pushViewController(eventSearchVC, animated:
+            true)
+    }
     
     func mustLogin(action: UIAlertAction!) {
         let loginVC = self.storyboard!.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
@@ -67,10 +78,6 @@ class EventsTableViewController: UITableViewController {
     }
     
     
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,43 +96,87 @@ class EventsTableViewController: UITableViewController {
                 #selector(loginButtonTapped))
         }
         
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
+        
         
         
         eventStore.fetchUpcomingEvents { result in
             switch result {
             case let .success(array) :
-                print(array)
-                
+             OperationQueue.main.addOperation {
                 self.events = array
-                
+                return
+                }
             case let .failure(error) :
                 print("failed to get events: \(error)")
+                self.displayMyAlertMessage(userMessage: "Failed to Get Events.  Try again.")
             }
         }
+        
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+    
         self.update()
         
+        
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        eventStore.fetchUpcomingEvents { result in
+            switch result {
+            case let .success(array) :
+                OperationQueue.main.addOperation {
+                    self.events = array
+                    return
+                }
+            case let .failure(error) :
+                print("failed to get events: \(error)")
+                self.displayMyAlertMessage(userMessage: "Failed to Get Events.  Try again.")
+            }
+        }
+        OperationQueue.main.addOperation {
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
+            return
+        }
+        
+    }
+  
+    
+    func displayMyAlertMessage(userMessage: String) {
+        
+        OperationQueue.main.addOperation {
+            
+            let myAlert = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            myAlert.addAction(action)
+            
+            self.present(myAlert, animated: true, completion: nil)
+            
+            return
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-    // MARK: - Table view data source
+    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        
         return events.count
     }
     
@@ -164,11 +215,13 @@ class EventsTableViewController: UITableViewController {
     
     
     func update() {
+        
+        
         OperationQueue.main.addOperation {
-            
             self.tableView.reloadData()
             return
         }
     }
+    
     
 }

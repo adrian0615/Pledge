@@ -63,14 +63,15 @@ class OrganizationPost {
     
     func processPostLogin(data: Data, error: Swift.Error?) -> OrganizationPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            
-            if let organizationDict = Organization.init(jsonObject: (object["organization"] as! [String: Any])) {
-                return .success(organizationDict)
-                } else {
-                    return .failureLogin(object["errorInfomation"] as! String)
+            if object["errorInfomation"] as? String == "Invalid email or password" {
+                return .failureLogin(object["errorInfomation"] as! String)
+            } else {
+                if let organizationDict = Organization.init(jsonObject: (object["organization"] as! [String: Any])) {
+                    return .success(organizationDict)
                 }
             }
-            return .failure(.system(error!))
+        }
+        return .failure(.system(error!))
     }
     
     func postRegister(name: String, address: String, city: String, state: String, zip: Int, email: String, password: String, completion: @escaping (OrganizationPostResult) -> ()) {
@@ -113,17 +114,18 @@ class OrganizationPost {
     
     func processPostRegister(data: Data, error: Swift.Error?) -> OrganizationPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            
+            if object["errorInfomation"] as? String == "Invalid email or password" {
+                return .failureLogin(object["errorInfomation"] as! String)
+            } else {
                 if let organizationDict = Organization.init(jsonObject: (object["organization"] as! [String: Any])) {
                     return .success(organizationDict)
-                } else {
-                    return .failureLogin(object["errorInfomation"] as! String)
                 }
             }
-            return .failure(.system(error!))
+        }
+        return .failure(.system(error!))
     }
     
-    func postEditProfile(name: String, address: String, city: String, state: String, zip: Int, email: String, userId: Int, completion: @escaping (OrganizationPostResult) -> ()) {
+    func postEditProfile(name: String, address: String, city: String, state: String, zip: Int, email: String, userId: String, completion: @escaping (OrganizationPostResult) -> ()) {
         
         let session = URLSession.shared
         
@@ -137,7 +139,7 @@ class OrganizationPost {
         
         
         
-        let payload = try! JSONSerialization.data(withJSONObject: ["name": name, "address": address, "city": city, "state": state, "zip": zip, "email": email, "userId": userId], options: [])
+        let payload = try! JSONSerialization.data(withJSONObject: ["name": name, "address": address, "city": city, "state": state, "zip": zip, "email": email, "id": userId], options: [])
         request.httpBody = payload
         
         let task = session.dataTask(with: request) { (optionalData, optionalResponse, optionalError) in
@@ -163,13 +165,14 @@ class OrganizationPost {
     
     func processPostProfile(data: Data, error: Swift.Error?) -> OrganizationPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            
+            if object["errorInfomation"] as? String == "Invalid email or password" {
+                return .failureLogin(object["errorInfomation"] as! String)
+            } else {
                 if let organizationDict = Organization.init(jsonObject: (object["organization"] as! [String: Any])) {
                     return .success(organizationDict)
-                } else {
-                    return .failureLogin(object["errorInfomation"] as! String)
                 }
             }
-            return .failure(.system(error!))
+        }
+        return .failure(.system(error!))
     }
 }

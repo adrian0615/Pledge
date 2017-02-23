@@ -52,6 +52,12 @@
 		0778B0201E5B5E9900829EA4 /* EditEventDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B01F1E5B5E9900829EA4 /* EditEventDateViewController.swift */; };
 		0778B0221E5B5EC100829EA4 /* EditEventDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B0211E5B5EC100829EA4 /* EditEventDescriptionViewController.swift */; };
 		0778B0241E5B645F00829EA4 /* MyEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B0231E5B645F00829EA4 /* MyEventViewController.swift */; };
+		0778B0261E5B821C00829EA4 /* EventSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B0251E5B821C00829EA4 /* EventSearchViewController.swift */; };
+		0778B0281E5B850900829EA4 /* CharitySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B0271E5B850900829EA4 /* CharitySearchViewController.swift */; };
+		0778B02A1E5B982E00829EA4 /* EventResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B0291E5B982E00829EA4 /* EventResultsTableViewController.swift */; };
+		0778B02C1E5B984C00829EA4 /* CharityResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B02B1E5B984C00829EA4 /* CharityResultsTableViewController.swift */; };
+		0778B02E1E5B9A6700829EA4 /* FundraiserResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B02D1E5B9A6700829EA4 /* FundraiserResultsTableViewController.swift */; };
+		0778B0301E5B9A8700829EA4 /* FundraiserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778B02F1E5B9A8700829EA4 /* FundraiserSearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +129,12 @@
 		0778B01F1E5B5E9900829EA4 /* EditEventDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventDateViewController.swift; sourceTree = "<group>"; };
 		0778B0211E5B5EC100829EA4 /* EditEventDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventDescriptionViewController.swift; sourceTree = "<group>"; };
 		0778B0231E5B645F00829EA4 /* MyEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventViewController.swift; sourceTree = "<group>"; };
+		0778B0251E5B821C00829EA4 /* EventSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSearchViewController.swift; sourceTree = "<group>"; };
+		0778B0271E5B850900829EA4 /* CharitySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharitySearchViewController.swift; sourceTree = "<group>"; };
+		0778B0291E5B982E00829EA4 /* EventResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventResultsTableViewController.swift; sourceTree = "<group>"; };
+		0778B02B1E5B984C00829EA4 /* CharityResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharityResultsTableViewController.swift; sourceTree = "<group>"; };
+		0778B02D1E5B9A6700829EA4 /* FundraiserResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FundraiserResultsTableViewController.swift; sourceTree = "<group>"; };
+		0778B02F1E5B9A8700829EA4 /* FundraiserSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FundraiserSearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +195,8 @@
 				075BA8C21E537616008E3F93 /* EditProfileViewController.swift */,
 				074B96211E4D1003000B76BA /* EventsTableViewController.swift */,
 				076E915B1E4FF94C00E61894 /* EventViewController.swift */,
+				0778B0251E5B821C00829EA4 /* EventSearchViewController.swift */,
+				0778B0291E5B982E00829EA4 /* EventResultsTableViewController.swift */,
 				075BA8C41E53AA86008E3F93 /* MyEventsTableViewController.swift */,
 				0778B0231E5B645F00829EA4 /* MyEventViewController.swift */,
 				076E91611E512E6C00E61894 /* AddEventViewController.swift */,
@@ -194,9 +208,13 @@
 				074B96231E4D13EF000B76BA /* CharitiesTableViewController.swift */,
 				076E915D1E5007C600E61894 /* CharityViewController.swift */,
 				07477D791E523964009DC76E /* DonateViewController.swift */,
+				0778B0271E5B850900829EA4 /* CharitySearchViewController.swift */,
+				0778B02B1E5B984C00829EA4 /* CharityResultsTableViewController.swift */,
 				07477D7F1E535428009DC76E /* FundraisersTableViewController.swift */,
 				07477D871E536581009DC76E /* FundraiserViewController.swift */,
 				075BA8EC1E55FD5F008E3F93 /* DescriptionViewController.swift */,
+				0778B02F1E5B9A8700829EA4 /* FundraiserSearchViewController.swift */,
+				0778B02D1E5B9A6700829EA4 /* FundraiserResultsTableViewController.swift */,
 				074B8D1F1E492847000B76BA /* PledgeAPI.swift */,
 				074B8D211E4928A8000B76BA /* Individual.swift */,
 				074B95991E4B98AD000B76BA /* IndividualPost.swift */,
@@ -387,6 +405,7 @@
 				074B8D241E492907000B76BA /* Organization.swift in Sources */,
 				0778B0241E5B645F00829EA4 /* MyEventViewController.swift in Sources */,
 				076E915E1E5007C600E61894 /* CharityViewController.swift in Sources */,
+				0778B0281E5B850900829EA4 /* CharitySearchViewController.swift in Sources */,
 				076E915C1E4FF94C00E61894 /* EventViewController.swift in Sources */,
 				074B8D1E1E492828000B76BA /* CharityAPI.swift in Sources */,
 				074B95E61E4CED22000B76BA /* HomeViewController.swift in Sources */,
@@ -398,10 +417,14 @@
 				07477D821E535568009DC76E /* PledgeTabBarViewController.swift in Sources */,
 				074B8D221E4928A8000B76BA /* Individual.swift in Sources */,
 				07477D7C1E5246F0009DC76E /* EventDateViewController.swift in Sources */,
+				0778B02C1E5B984C00829EA4 /* CharityResultsTableViewController.swift in Sources */,
 				075BA8C11E537576008E3F93 /* ProfileViewController.swift in Sources */,
+				0778B0261E5B821C00829EA4 /* EventSearchViewController.swift in Sources */,
 				07477D861E536051009DC76E /* FundraiserStore.swift in Sources */,
+				0778B02A1E5B982E00829EA4 /* EventResultsTableViewController.swift in Sources */,
 				074B8D1A1E492806000B76BA /* EventPost.swift in Sources */,
 				074B8D1C1E49281B000B76BA /* Charity.swift in Sources */,
+				0778B02E1E5B9A6700829EA4 /* FundraiserResultsTableViewController.swift in Sources */,
 				07477D881E536581009DC76E /* FundraiserViewController.swift in Sources */,
 				075BA8C51E53AA86008E3F93 /* MyEventsTableViewController.swift in Sources */,
 				0778B01E1E5B5D9500829EA4 /* EditEventViewController.swift in Sources */,
@@ -410,6 +433,7 @@
 				07477D801E535428009DC76E /* FundraisersTableViewController.swift in Sources */,
 				0778B0221E5B5EC100829EA4 /* EditEventDescriptionViewController.swift in Sources */,
 				0778B0201E5B5E9900829EA4 /* EditEventDateViewController.swift in Sources */,
+				0778B0301E5B9A8700829EA4 /* FundraiserSearchViewController.swift in Sources */,
 				074B8D181E4927FB000B76BA /* Event.swift in Sources */,
 				074B8F051E4A4E85000B76BA /* LoginViewController.swift in Sources */,
 			);

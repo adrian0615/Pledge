@@ -10,6 +10,17 @@ import UIKit
 
 class EditEventDateViewController: UIViewController {
     
+    
+    var name: String = " "
+    var host: String = " "
+    var location: String = " "
+    var address: String = " "
+    var city: String = " "
+    var state: String = " "
+    var zipString: String = " "
+    var type: String = " "
+    var details: String = " "
+    
     @IBOutlet var startDatePicker: UIDatePicker!
     @IBOutlet var endDatePicker: UIDatePicker!
     
@@ -27,6 +38,17 @@ class EditEventDateViewController: UIViewController {
         
         let editEventVC = self.storyboard!.instantiateViewController(withIdentifier: "EditEventView") as! EditEventViewController
         
+        
+        editEventVC.name = name
+        editEventVC.type = type
+        editEventVC.host = host
+        editEventVC.location = location
+        editEventVC.address = address
+        editEventVC.city = city
+        editEventVC.state = state
+        editEventVC.zipString = zipString
+        editEventVC.details = details
+        
         editEventVC.startDate = startDatePicker.date
         editEventVC.endDate = endDatePicker.date
         
@@ -41,7 +63,7 @@ class EditEventDateViewController: UIViewController {
         
         title = "Edit Times"
         
-        
+        navigationController?.navigationBar.tintColor = UIColor.white
         
     }
     

@@ -10,13 +10,14 @@ import UIKit
 
 class MyEventsTableViewController: UITableViewController {
     
+    
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     
     var eventPost = EventPost()
     
     let userType = UserDefaults.standard.string(forKey: "type")
-    let userId = UserDefaults.standard.integer(forKey: "userId")
-    let hostId = UserDefaults.standard.integer(forKey: "hostId")
+    let userId = UserDefaults.standard.string(forKey: "userId")
+    let hostId = UserDefaults.standard.string(forKey: "hostId")
     
     
     var events: [Event] = [] {
@@ -59,10 +60,10 @@ class MyEventsTableViewController: UITableViewController {
         
         
         
-        title = "MyEvents"
+        title = "My Events"
         
         if !isUserLoggedIn {
-            let acNoNetwork = UIAlertController(title: "Must Login to View MyEvents", message: nil, preferredStyle: .alert)
+            let acNoNetwork = UIAlertController(title: "Must Login to View My Events", message: nil, preferredStyle: .alert)
             
             acNoNetwork.addAction(UIAlertAction(title: "OK", style: .default, handler: self.mustLogin))
             
@@ -77,30 +78,87 @@ class MyEventsTableViewController: UITableViewController {
             "Logout", style: .plain, target: self, action:
             #selector(logoutButtonTapped))
         
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
+       
+        
+        eventPost.postMyEvents(userId: userId!) { result in
+         switch result {
+         case let .success(array) :
+         print(array)
+         
+         self.events = array
+         
+         case let .failureLogin(error) :
+         print("Failed to Get Events \(error)")
+         
+         self.displayMyAlertMessage(userMessage: "Unable to Get Events.  Try Again.")
+         
+         
+         case let .failure(error) :
+         print("Failed to Save Event \(error)")
+         
+         self.displayMyAlertMessage(userMessage: "Get Events.  Try Again.")
+         }
+         }
         
         
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
     }
-    /*eventStore.fetchUpcomingEvents { result in
-     switch result {
-     case let .success(array) :
-     print(array)
-     
-     self.events = array
-     
-     case let .failure(error) :
-     print("failed to get events: \(error)")
-     }
-     }*/
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     
+    
+    
+  
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.update()
         
+        
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        eventPost.postMyEvents(userId: userId!) { result in
+         switch result {
+         case let .success(array) :
+        
+         
+         self.events = array
+         
+         case let .failureLogin(error) :
+         print("Failed to Get Events \(error)")
+         
+         self.displayMyAlertMessage(userMessage: "Unable to Get Events.  Try Again.")
+         
+         
+         case let .failure(error) :
+         print("Failed to Save Event \(error)")
+         
+         self.displayMyAlertMessage(userMessage: "Get Events.  Try Again.")
+         }
+         }
+        OperationQueue.main.addOperation {
+            self.tableView.reloadData()
+            return
+        }
+        
+    }
+    
+    func displayMyAlertMessage(userMessage: String) {
+        
+        OperationQueue.main.addOperation {
+            
+            let myAlert = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            myAlert.addAction(action)
+            
+            self.present(myAlert, animated: true, completion: nil)
+            
+            return
+        }
     }
     
     func mustLogin(action: UIAlertAction!) {
@@ -114,18 +172,18 @@ class MyEventsTableViewController: UITableViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+       
     }
     
-    // MARK: - Table view data source
+    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+       
         return events.count
     }
     
@@ -133,9 +191,14 @@ class MyEventsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: eventCellIdentifier, for: indexPath)
         
         
-        cell.textLabel?.text = events[indexPath.row].name
-        cell.detailTextLabel?.text = "\((events[indexPath.row].type).capitalized)\n\(events[indexPath.row].location) -\((events[indexPath.row].city).uppercased())\n\(Date(timeIntervalSince1970: (events[indexPath.row].startTime) / 1000))"
         
+        if hostId == events[indexPath.row].hostId {
+            cell.textLabel?.text = "\(events[indexPath.row].name) - Hosting"
+            cell.detailTextLabel?.text = "\((events[indexPath.row].type).capitalized)\n\(events[indexPath.row].location) -\((events[indexPath.row].city).uppercased())\n\(Date(timeIntervalSince1970: (events[indexPath.row].startTime) / 1000))"
+        } else {
+            cell.textLabel?.text = "\(events[indexPath.row].name) - Attending"
+            cell.detailTextLabel?.text = "\((events[indexPath.row].type).capitalized)\n\(events[indexPath.row].location) -\((events[indexPath.row].city).uppercased())\n\(Date(timeIntervalSince1970: (events[indexPath.row].startTime) / 1000))"
+        }
         
         return cell
     }
@@ -157,8 +220,9 @@ class MyEventsTableViewController: UITableViewController {
     
     
     func update() {
+        
+        
         OperationQueue.main.addOperation {
-            
             self.tableView.reloadData()
             return
         }

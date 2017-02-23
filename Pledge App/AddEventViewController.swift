@@ -1,3 +1,4 @@
+
 //
 //  AddEventViewController.swift
 //  Pledge App
@@ -11,8 +12,8 @@ import UIKit
 class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
-    let userId = UserDefaults.standard.integer(forKey: "userId")
-    let hostId = UserDefaults.standard.integer(forKey: "hostId")
+    let userId = UserDefaults.standard.string(forKey: "userId")
+    let hostId = UserDefaults.standard.string(forKey: "hostId")
     
     var eventPost = EventPost()
     
@@ -20,11 +21,19 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     let types = ["Event Type", "Arts & Culture", "Activism", "Animal Rights", "Civil Rights", "Community Improvement", "Disaster Relief", "Disability Assistance", "Education", "Elderly Assistance", "Environmental", "Feeding the Less Fortunate", "Housing & Shelter", "Human Rights", "Human Services", "Mental Health", "Public Health", "Public Safety", "Transportation", "Youth Development"]
     
+    
+    var name: String = "Event Name"
+    var host: String = "Event Host"
+    var location: String = "Event Location"
+    var address: String = "Event Address"
+    var city: String = "Event City"
     var state: String = " "
+    var zipString: String = "Event Zip"
     var type: String = " "
-    var details: String = " "
+    var details: String = "Insert Event Description And Contact Info Here."
     
-    
+    let startFormatter = DateFormatter()
+    let endFormatter = DateFormatter()
     
     var startDate = Date()
     var endDate = Date()
@@ -43,6 +52,40 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBAction func startButtonTapped(_ sender: Any) {
         let eventDateVC = self.storyboard!.instantiateViewController(withIdentifier: "EventDateView") as! EventDateViewController
         
+        if nameField.text?.isEmpty == false {
+            name = nameField.text!
+        }
+        
+        if hostField.text?.isEmpty == false {
+            host = hostField.text!
+        }
+        
+        if addressField.text?.isEmpty == false {
+            address = addressField.text!
+        }
+        
+        if cityField.text?.isEmpty == false {
+            city = cityField.text!
+        }
+        
+        if locationField.text?.isEmpty == false {
+            location = locationField.text!
+        }
+        
+        if zipField.text?.isEmpty == false {
+            zipString = zipField.text!
+        }
+        
+        eventDateVC.name = name
+        eventDateVC.host = host
+        eventDateVC.type = type
+        eventDateVC.address = address
+        eventDateVC.city = city
+        eventDateVC.location = location
+        eventDateVC.state = state
+        eventDateVC.zipString = zipString
+        eventDateVC.details = details
+        
         self.navigationController?.pushViewController(eventDateVC, animated:
             true)
     }
@@ -51,6 +94,40 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         let eventDateVC = self.storyboard!.instantiateViewController(withIdentifier: "EventDateView") as! EventDateViewController
         
+        if nameField.text?.isEmpty == false {
+            name = nameField.text!
+        }
+        
+        if hostField.text?.isEmpty == false {
+            host = hostField.text!
+        }
+        
+        if addressField.text?.isEmpty == false {
+            address = addressField.text!
+        }
+        
+        if cityField.text?.isEmpty == false {
+            city = cityField.text!
+        }
+        
+        if locationField.text?.isEmpty == false {
+            location = locationField.text!
+        }
+        
+        if zipField.text?.isEmpty == false {
+            zipString = zipField.text!
+        }
+        
+        eventDateVC.name = name
+        eventDateVC.host = host
+        eventDateVC.type = type
+        eventDateVC.address = address
+        eventDateVC.city = city
+        eventDateVC.location = location
+        eventDateVC.state = state
+        eventDateVC.zipString = zipString
+        eventDateVC.details = details
+        
         self.navigationController?.pushViewController(eventDateVC, animated:
             true)
     }
@@ -58,6 +135,26 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBAction func descriptionButtonTapped(_ sender: Any) {
         
         let eventDescriptionVC = self.storyboard!.instantiateViewController(withIdentifier: "EventDescriptionView") as! EventDescriptionViewController
+        
+        name = nameField.text!
+        host = hostField.text!
+        address = addressField.text!
+        city = cityField.text!
+        location = locationField.text!
+        zipString = zipField.text!
+        
+        eventDescriptionVC.name = name
+        eventDescriptionVC.host = host
+        eventDescriptionVC.type = type
+        eventDescriptionVC.address = address
+        eventDescriptionVC.city = city
+        eventDescriptionVC.location = location
+        eventDescriptionVC.state = state
+        eventDescriptionVC.zipString = zipString
+        eventDescriptionVC.details = details
+        
+        eventDescriptionVC.startDate = startDate
+        eventDescriptionVC.endDate = endDate
         
         self.navigationController?.pushViewController(eventDescriptionVC, animated:
             true)
@@ -72,31 +169,32 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             return
         }
         
-        let name = nameField.text
-        let host = hostField.text
-        let location = locationField.text
-        let address = addressField.text
-        let city = cityField.text
-        let zip = Int(zipField.text!)
+        //displayMyAlertMessage(userMessage: "Set Event Type and State")
         
-        let startDateString = startButton.titleLabel?.text
-        let endDateString = endButton.titleLabel?.text
-        
-        let startDateFormatter = DateFormatter()
-        let endDateFormatter = DateFormatter()
-        
-        startDateFormatter.dateFormat = "yyyy-MM-dd HH:MM"
-        endDateFormatter.dateFormat = "yyyy-MM-dd HH:MM"
-        
-        let startDate = startDateFormatter.date(from: startDateString!)
-        let endDate = endDateFormatter.date(from: endDateString!)
-        
-        let startTimeInterval = startDate?.timeIntervalSince1970
-        let endTimeInterval = endDate?.timeIntervalSince1970
+        name = nameField.text!
+        host = hostField.text!
+        location = locationField.text!
+        address = addressField.text!
+        city = cityField.text!
+        zipString = zipField.text!
         
         
+        print("startDate: \(startDate)")
+        print("endDate: \(endDate)")
         
-        eventPost.postCreateEvent(name: name!, type: self.type, host: host!, userId: self.userId, hostId: self.hostId, location: location!, address: address!, city: city!, state: self.state, zip: zip!, startTime: startTimeInterval!, endTime: endTimeInterval!, details: details) { result in
+        let startTimeInterval = startDate.timeIntervalSince1970
+        let endTimeInterval = endDate.timeIntervalSince1970
+        
+        if self.state == " " {
+            state = "AK"
+        }
+        
+        if self.type == " " {
+            type = "Non-Profit"
+        }
+        
+        
+        eventPost.postCreateEvent(name: name, type: self.type, host: host, userId: self.userId!, hostId: self.hostId!, location: location, address: address, city: city, state: self.state, zip: Int(zipString)!, startTime: (startTimeInterval * 1000), endTime: (endTimeInterval * 1000), details: details) { result in
             
             switch result {
             case let .success(array) :
@@ -108,7 +206,7 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     let okAction = UIAlertAction(title: "OK", style: .default) { action in
                         
                         
-                        let myEventsVC = self.storyboard!.instantiateViewController(withIdentifier: "MyEventsView") as! EventsTableViewController
+                        let myEventsVC = self.storyboard!.instantiateViewController(withIdentifier: "MyEventsView") as! MyEventsTableViewController
                         
                         myEventsVC.events = array
                         
@@ -217,8 +315,9 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 #selector(saveButtonTapped))
         }
         
-        let startFormatter = DateFormatter()
-        let endFormatter = DateFormatter()
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
+        
         
         
         startFormatter.dateStyle = .medium
@@ -227,8 +326,8 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         endFormatter.timeStyle = .short
         
         
-        startButton.setTitle("\(startFormatter.string(from: startDate))", for: .normal)
-        endButton.setTitle("\(endFormatter.string(from: endDate))", for: .normal)
+        startButton.setTitle("\(self.startFormatter.string(from: self.startDate))", for: .normal)
+        endButton.setTitle("\(self.endFormatter.string(from: self.endDate))", for: .normal)
         
         
         statePicker.delegate = self
@@ -236,7 +335,16 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         typePicker.delegate = self
         typePicker.dataSource = self
         
+        nameField.text = name
+        hostField.text = host
+        locationField.text = location
+        addressField.text = address
+        cityField.text = city
+        zipField.text = zipString
+        
+        
     }
+    
     
     
     
@@ -256,3 +364,6 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     
 }
+
+
+

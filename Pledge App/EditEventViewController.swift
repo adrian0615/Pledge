@@ -11,17 +11,22 @@ import UIKit
 class EditEventViewController: UIViewController{
     
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
-    let userId = UserDefaults.standard.integer(forKey: "userId")
-    let hostId = UserDefaults.standard.integer(forKey: "hostId")
+    let userId = UserDefaults.standard.string(forKey: "userId")
+    let hostId = UserDefaults.standard.string(forKey: "hostId")
     
     var eventPost = EventPost()
-    var eventId: Int? = nil
+    var eventId: String? = nil
     
-    
-    var details: String = " "
-    
-    var type: String = " "
+    var name: String = "Event Name"
+    var host: String = "Event Host"
+    var location: String = "Event Location"
+    var address: String = "Event Address"
+    var city: String = "Event City"
     var state: String = " "
+    var zipString: String = "Event Zip"
+    var type: String = " "
+    var details: String = "Insert Event Description And Contact Info Here."
+    
     
     var startDate = Date()
     var endDate = Date()
@@ -40,6 +45,48 @@ class EditEventViewController: UIViewController{
     @IBAction func startButtonTapped(_ sender: Any) {
         let editEventDateVC = self.storyboard!.instantiateViewController(withIdentifier: "EditEventDateView") as! EditEventDateViewController
         
+        
+        if nameField.text?.isEmpty == false {
+            name = nameField.text!
+        }
+        
+        if typeField.text?.isEmpty == false {
+            type = typeField.text!
+        }
+        if hostField.text?.isEmpty == false{
+            host = hostField.text!
+        }
+        
+        if addressField.text?.isEmpty == false {
+            address = addressField.text!
+        }
+        
+        if cityField.text?.isEmpty == false {
+            city = cityField.text!
+        }
+        
+        if stateField.text?.isEmpty == false {
+            state = stateField.text!
+        }
+        
+        if locationField.text?.isEmpty == false {
+            location = locationField.text!
+        }
+        
+        if zipField.text?.isEmpty == false {
+            zipString = zipField.text!
+        }
+        
+        editEventDateVC.name = name
+        editEventDateVC.host = host
+        editEventDateVC.type = type
+        editEventDateVC.address = address
+        editEventDateVC.city = city
+        editEventDateVC.location = location
+        editEventDateVC.state = state
+        editEventDateVC.zipString = zipString
+        editEventDateVC.details = details
+        
         self.navigationController?.pushViewController(editEventDateVC, animated: true)
         
         
@@ -48,6 +95,47 @@ class EditEventViewController: UIViewController{
     @IBAction func endButtonTapped(_ sender: Any) {
         
         let editEventDateVC = self.storyboard!.instantiateViewController(withIdentifier: "EditEventDateView") as! EditEventDateViewController
+        
+        if nameField.text?.isEmpty == false {
+        name = nameField.text!
+        }
+        
+        if typeField.text?.isEmpty == false {
+        type = typeField.text!
+        }
+        if hostField.text?.isEmpty == false{
+        host = hostField.text!
+        }
+        
+        if addressField.text?.isEmpty == false {
+        address = addressField.text!
+        }
+        
+        if cityField.text?.isEmpty == false {
+        city = cityField.text!
+        }
+        
+        if stateField.text?.isEmpty == false {
+        state = stateField.text!
+        }
+        
+        if locationField.text?.isEmpty == false {
+        location = locationField.text!
+        }
+        
+        if zipField.text?.isEmpty == false {
+        zipString = zipField.text!
+        }
+            
+        editEventDateVC.name = name
+        editEventDateVC.host = host
+        editEventDateVC.type = type
+        editEventDateVC.address = address
+        editEventDateVC.city = city
+        editEventDateVC.location = location
+        editEventDateVC.state = state
+        editEventDateVC.zipString = zipString
+        editEventDateVC.details = details
         
         self.navigationController?.pushViewController(editEventDateVC, animated: true)
         
@@ -71,31 +159,22 @@ class EditEventViewController: UIViewController{
             return
         }
         
-        let name = nameField.text
-        let host = hostField.text
-        let location = locationField.text
-        let address = addressField.text
-        let city = cityField.text
-        let zip = Int(zipField.text!)
-        
-        let startDateString = startButton.titleLabel?.text
-        let endDateString = endButton.titleLabel?.text
-        
-        let startDateFormatter = DateFormatter()
-        let endDateFormatter = DateFormatter()
-        
-        startDateFormatter.dateFormat = "yyyy-MM-dd HH:MM"
-        endDateFormatter.dateFormat = "yyyy-MM-dd HH:MM"
-        
-        let startDate = startDateFormatter.date(from: startDateString!)
-        let endDate = endDateFormatter.date(from: endDateString!)
-        
-        let startTimeInterval = startDate?.timeIntervalSince1970
-        let endTimeInterval = endDate?.timeIntervalSince1970
+         name = nameField.text!
+        type = typeField.text!
+        host = hostField.text!
+        location = locationField.text!
+        address = addressField.text!
+        city = cityField.text!
+        state = stateField.text!
+        zipString = zipField.text!
         
         
-        ///Needs to be edit event
-        eventPost.postEditEvent(name: name!, type: self.type, host: host!, userId: self.userId, hostId: self.hostId, location: location!, address: address!, city: city!, state: self.state, zip: zip!, startTime: startTimeInterval!, endTime: endTimeInterval!, details: details, eventId: eventId!) { result in
+        let startTimeInterval = startDate.timeIntervalSince1970
+        let endTimeInterval = endDate.timeIntervalSince1970
+        
+        
+        
+        eventPost.postEditEvent(name: name, type: type, host: host, userId: self.userId!, hostId: self.hostId!, location: location, address: address, city: city, state: state, zip: Int(zipString)!, startTime: (startTimeInterval * 1000), endTime: (endTimeInterval * 1000), details: details, eventId: eventId!) { result in
             
             switch result {
             case let .success(array) :
@@ -172,6 +251,8 @@ class EditEventViewController: UIViewController{
                 "Save", style: .plain, target: self, action:
                 #selector(saveButtonTapped))
         }
+        
+        navigationController?.navigationBar.tintColor = UIColor.white
         
         let startFormatter = DateFormatter()
         let endFormatter = DateFormatter()

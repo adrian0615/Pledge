@@ -10,10 +10,13 @@ import UIKit
 
 class FundraisersTableViewController: UITableViewController {
     
+    weak var activityIndicatorView: UIActivityIndicatorView!
     
     var fundraiserStore = FundraiserStore()
     
     var location: CLLocation!
+    
+    var coordinateString: String? = nil
     
     var fundraisers: [Fundraiser] = [] {
         didSet {
@@ -27,22 +30,76 @@ class FundraisersTableViewController: UITableViewController {
     
     let fundraiserCellIdentifier = "FundraiserCell"
     
+    /*@IBAction func searchButtonTapped(_ sender: Any) {
+     let fundraiserSearchVC = self.storyboard!.instantiateViewController(withIdentifier: "FundraiserSearchView") as! FundraiserSearchViewController
+     
+     fundraiserSearchVC.fundraiserStore = fundraiserStore
+     
+     self.navigationController?.pushViewController(fundraiserSearchVC, animated:
+     true)
+     }*/
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Fundraisers"
         
-        fundraiserStore.fetchLocalFundraisers { result in
+        if coordinateString == nil {
+            coordinateString = "33.7523938,-84.3915388"
+        }
+        
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
+        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        tableView.backgroundView = activityIndicatorView
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        self.activityIndicatorView = activityIndicatorView
+        
+        fundraiserStore.fetchLocalFundraisers(coordinate: coordinateString!) { result in
             switch result {
             case let .success(array) :
-                print(array)
-                
                 self.fundraisers = array
                 
             case let .failure(error) :
                 print("failed to get events: \(error)")
+                self.displayMyAlertMessage(userMessage: "Failed to get Fundraisers.  Try again.")
             }
         }
+        
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        activityIndicatorView.startAnimating()
+        
+        self.update()
+        
+        
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        fundraiserStore.fetchLocalFundraisers(coordinate: coordinateString!) { result in
+            switch result {
+            case let .success(array) :
+                
+                
+                OperationQueue.main.addOperation {
+                    self.fundraisers = array
+                    return
+                }
+                
+                
+            case let .failure(error) :
+                print("failed to get events: \(error)")
+                self.displayMyAlertMessage(userMessage: "Failed to get Fundraisers.  Try again.")
+            }
+        }
+        OperationQueue.main.addOperation {
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
+            return
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,7 +107,20 @@ class FundraisersTableViewController: UITableViewController {
         
     }
     
-    
+    func displayMyAlertMessage(userMessage: String) {
+        
+        OperationQueue.main.addOperation {
+            
+            let myAlert = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            myAlert.addAction(action)
+            
+            self.present(myAlert, animated: true, completion: nil)
+            
+            return
+        }
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -116,8 +186,9 @@ class FundraisersTableViewController: UITableViewController {
     }
     
     func update() {
+        
         OperationQueue.main.addOperation {
-            
+            self.activityIndicatorView.stopAnimating()
             self.tableView.reloadData()
             return
         }

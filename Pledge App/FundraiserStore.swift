@@ -22,9 +22,9 @@ class FundraiserStore {
         case pledgeAPI(PledgeAPI.Error)
 }
     
-    func fetchLocalFundraisers(_ completion: @escaping (FundraiserResult) -> ()) {
+    func fetchLocalFundraisers(coordinate: String, _ completion: @escaping (FundraiserResult) -> ()) {
         
-        let url = URL(string: "https://api.predicthq.com/v1/events/?within=150km@33.7523938,-84.3915388&label=fundraiser&start.gte=2017-02-24&sort=start")!
+        let url = URL(string: "https://api.predicthq.com/v1/events/?within=150km@\(coordinate)&label=fundraiser&start.gte=2017-02-24&sort=start")!
         
         let session = URLSession.shared
         

@@ -13,7 +13,7 @@ class EditProfileViewController: UIViewController {
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     
     let userType = UserDefaults.standard.string(forKey: "type")
-    let userId = UserDefaults.standard.integer(forKey: "userId")
+    let userId = UserDefaults.standard.string(forKey: "userId")
     
     var organizationPost = OrganizationPost()
     var individualPost = IndividualPost()
@@ -57,7 +57,7 @@ class EditProfileViewController: UIViewController {
             let state = stateField.text
             let zip = Int(zipField.text!)
             
-            organizationPost.postEditProfile(name: name!, address: address!, city: city!, state: state!, zip: zip!, email: email!, userId: userId) { profileResult in
+            organizationPost.postEditProfile(name: name!, address: address!, city: city!, state: state!, zip: zip!, email: email!, userId: userId!) { profileResult in
                 switch profileResult {
                 case let .success(result) :
                     
@@ -109,7 +109,7 @@ class EditProfileViewController: UIViewController {
             let lastName = familyNameField.text
             let email = emailField.text
             
-            individualPost.postEditProfile(firstName: firstName!, lastName: lastName!, email: email! , userId: userId) { profileResult in
+            individualPost.postEditProfile(firstName: firstName!, lastName: lastName!, email: email! , userId: userId!) { profileResult in
                 switch profileResult {
                 case let .success(result) :
                     
@@ -172,6 +172,7 @@ class EditProfileViewController: UIViewController {
             "Save", style: .plain, target: self, action:
             #selector(saveButtonTapped))
         
+        navigationController?.navigationBar.tintColor = UIColor.white
         
         if userType == "individual" {
             addressLabel.isHidden = true

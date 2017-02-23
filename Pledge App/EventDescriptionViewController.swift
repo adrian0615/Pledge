@@ -10,6 +10,20 @@ import UIKit
 
 class EventDescriptionViewController: UIViewController {
     
+    
+    var name: String = " "
+    var host: String = " "
+    var location: String = " "
+    var address: String = " "
+    var city: String = " "
+    var state: String = " "
+    var zipString: String = " "
+    var type: String = " "
+    var details: String = " "
+    
+    var startDate = Date()
+    var endDate = Date()
+    
     @IBOutlet var detailsTextView: UITextView!
     
     @IBAction func enterButtonTapped(_ sender: Any) {
@@ -18,9 +32,22 @@ class EventDescriptionViewController: UIViewController {
         let addEventVC = self.storyboard!.instantiateViewController(withIdentifier: "AddEventView") as! AddEventViewController
         
         if detailsTextView.text != nil {
-            addEventVC.details = detailsTextView.text
+            details = detailsTextView.text
             
         }
+        
+        addEventVC.name = name
+        addEventVC.type = type
+        addEventVC.host = host
+        addEventVC.location = location
+        addEventVC.address = address
+        addEventVC.city = city
+        addEventVC.state = state
+        addEventVC.zipString = zipString
+        addEventVC.details = details
+        
+        addEventVC.startDate = startDate
+        addEventVC.endDate = endDate
         
         self.navigationController?.pushViewController(addEventVC, animated:
             true)
@@ -32,6 +59,10 @@ class EventDescriptionViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Add Description"
+        
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
+        detailsTextView.text = details
     }
     
     override func didReceiveMemoryWarning() {

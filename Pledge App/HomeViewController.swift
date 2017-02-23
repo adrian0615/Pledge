@@ -17,13 +17,13 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _ = Timer.scheduledTimer(timeInterval: 3.1, target: self, selector: #selector(self.logo), userInfo: nil, repeats: false)
+        _ = Timer.scheduledTimer(timeInterval: 4.1, target: self, selector: #selector(self.logo), userInfo: nil, repeats: false)
         // Do any additional setup after loading the view.
     }
     
     func logo() {
         pledgeLogoImage.image = UIImage(named: "pledge-logo")
-        _ = Timer.scheduledTimer(timeInterval: 3.1, target: self, selector: #selector(self.someSelector), userInfo: nil, repeats: false)
+        _ = Timer.scheduledTimer(timeInterval: 5.1, target: self, selector: #selector(self.someSelector), userInfo: nil, repeats: false)
     }
     
 

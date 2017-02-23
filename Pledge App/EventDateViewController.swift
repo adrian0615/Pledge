@@ -10,13 +10,25 @@ import UIKit
 
 class EventDateViewController: UIViewController {
     
+    var name: String = " "
+    var host: String = " "
+    var location: String = " "
+    var address: String = " "
+    var city: String = " "
+    var state: String = " "
+    var zipString: String = " "
+    var type: String = " "
+    var details: String = " "
+
+
+    
+    
     @IBOutlet var startDatePicker: UIDatePicker!
     @IBOutlet var endDatePicker: UIDatePicker!
     
     @IBAction func startDateValueChanged(_ sender: Any) {
         
-        
-        
+
         endDatePicker.date = startDatePicker.date
     }
     
@@ -27,6 +39,17 @@ class EventDateViewController: UIViewController {
         
         addEventVC.startDate = startDatePicker.date
         addEventVC.endDate = endDatePicker.date
+        
+        addEventVC.name = name
+        addEventVC.type = type
+        addEventVC.host = host
+        addEventVC.location = location
+        addEventVC.address = address
+        addEventVC.city = city
+        addEventVC.state = state
+        addEventVC.zipString = zipString
+        addEventVC.details = details
+        
         
         
         self.navigationController?.pushViewController(addEventVC, animated:
@@ -39,7 +62,7 @@ class EventDateViewController: UIViewController {
         
         title = "Event Times"
         
-        
+        navigationController?.navigationBar.tintColor = UIColor.white
         
     }
     

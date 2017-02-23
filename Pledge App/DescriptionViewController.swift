@@ -23,6 +23,8 @@ class DescriptionViewController: UIViewController {
         
         title = "Description"
         
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
         if fundraiser != nil {
             detailsTextView.text = fundraiser?.description
         }

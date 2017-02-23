@@ -46,6 +46,8 @@ class FundraiserViewController: UIViewController {
         
         title = "Fundraiser"
         
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
         let isoStartDate = fundraiser?.start
         
         

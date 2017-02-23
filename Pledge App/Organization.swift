@@ -11,7 +11,7 @@ import Foundation
 
 class Organization : Equatable {
     public static func == (lhs: Organization, rhs: Organization) -> Bool {
-        return lhs.name == rhs.name && lhs.address == rhs.address && lhs.city == rhs.city && lhs.state == rhs.state && lhs.zip == rhs.zip && lhs.email == rhs.email && lhs.hostId == rhs.hostId && lhs.userId == rhs.userId
+        return lhs.name == rhs.name && lhs.address == rhs.address && lhs.city == rhs.city && lhs.state == rhs.state && lhs.zip == rhs.zip && lhs.email == rhs.email && lhs.userId == rhs.userId
     }
     
     var name: String
@@ -19,12 +19,11 @@ class Organization : Equatable {
     var city: String
     var state: String
     var zip: Int
-    var hostId: Int
-    var userId: Int
+    var userId: String
     var email: String
     
     
-    init(name: String, address: String, city: String, state: String, zip: Int, email: String, userId: Int, hostId: Int) {
+    init(name: String, address: String, city: String, state: String, zip: Int, email: String, userId: String) {
         
         self.name = name
         self.address = address
@@ -33,7 +32,6 @@ class Organization : Equatable {
         self.zip = zip
         self.email = email
         self.userId = userId
-        self.hostId = hostId
         
     }
     
@@ -46,12 +44,11 @@ class Organization : Equatable {
             let userState = jsonObject["state"] as? String,
             let userZip = jsonObject["zip"] as? Int,
             let userEmail = jsonObject["email"] as? String,
-            let userHostId = jsonObject["hostId"] as? Int,
-            let theUserId = jsonObject["userId"] as? Int else {
+            let theUserId = jsonObject["id"] as? String else {
                 return nil
         }
         
         
-        self.init(name: userName, address: userAddress, city: userCity, state: userState, zip: userZip, email: userEmail, userId: theUserId, hostId: userHostId)
+        self.init(name: userName, address: userAddress, city: userCity, state: userState, zip: userZip, email: userEmail, userId: theUserId)
     }
 }

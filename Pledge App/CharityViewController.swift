@@ -38,6 +38,8 @@ class CharityViewController: UIViewController {
         
         title = "Charity"
         
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
         nameLabel.text = charity?.name
         typeLabel.text = charity?.category
         addressLabel.text = "\(charity!.city), \(charity!.state), \(charity!.zip)"

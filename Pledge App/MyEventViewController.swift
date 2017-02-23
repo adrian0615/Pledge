@@ -17,8 +17,8 @@ class MyEventViewController: UIViewController {
     let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     
     let userType = UserDefaults.standard.string(forKey: "type")
-    let userId = UserDefaults.standard.integer(forKey: "userId")
-    let hostId = UserDefaults.standard.integer(forKey: "hostId")
+    let userId = UserDefaults.standard.string(forKey: "userId")
+    let hostId = UserDefaults.standard.string(forKey: "hostId")
     
     var eventPost = EventPost()
     var event: Event? = nil
@@ -136,15 +136,12 @@ class MyEventViewController: UIViewController {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title:
                     "Edit", style: .plain, target: self, action:
                     #selector(editButtonTapped))
+            }  else {
+                title = "Attending"
+                deleteButton.isHidden = true
             }
             
-            if userType == "individual" {
-                
-                if event!.userIds.contains(userId) {
-                    title = "Attending"
-                    deleteButton.isHidden = true
-                }
-            }
+            
         }
         
         startDateFormatter.dateStyle = .medium
@@ -194,6 +191,8 @@ class MyEventViewController: UIViewController {
         pointAnnotation = MKPointAnnotation()
         
         eventLocationMap(address: "\(event!.address), \(event!.city), \(event!.state), \(event!.zip)")
+        
+        navigationController?.navigationBar.tintColor = UIColor.white
     }
     
     
@@ -212,7 +211,7 @@ class MyEventViewController: UIViewController {
     func yesDelete(action: UIAlertAction!) {
         
         
-        eventPost.postDeleteEvent(userId: userId, eventId: (event?.eventId)!) { result in
+        eventPost.postDeleteEvent(userId: userId!, eventId: (event?.eventId)!) { result in
             
             switch result {
             case let .success(array) :
@@ -223,7 +222,7 @@ class MyEventViewController: UIViewController {
                     let okAction = UIAlertAction(title: "OK", style: .default) { action in
                         
                         
-                        let myEventsVC = self.storyboard!.instantiateViewController(withIdentifier: "MyEventsView") as! EventsTableViewController
+                        let myEventsVC = self.storyboard!.instantiateViewController(withIdentifier: "MyEventsView") as! MyEventsTableViewController
                         
                         myEventsVC.events = array
                         

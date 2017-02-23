@@ -34,7 +34,7 @@ class DonateViewController: UIViewController, WKNavigationDelegate {
         
         title = "Browser"
         
-        
+        navigationController?.navigationBar.tintColor = UIColor.white
     }
     
     override func didReceiveMemoryWarning() {

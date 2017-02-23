@@ -63,13 +63,14 @@ class IndividualPost {
     
     func processPostLogin(data: Data, error: Swift.Error?) -> IndividualPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            
+            if object["errorInfomation"] as? String == "Invalid email or password" {
+                return .failureLogin(object["errorInfomation"] as! String)
+            } else {
             if let individualDict = Individual.init(jsonObject: (object["individual"] as! [String: Any])) {
             return .success(individualDict)
-            } else {
-                return .failureLogin(object["errorInfomation"] as! String)
                 }
             }
+        }
             return .failure(.system(error!))
     }
     
@@ -77,7 +78,7 @@ class IndividualPost {
         
         let session = URLSession.shared
         
-        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .individualProfile)
+        let url = PledgeAPI(base: PledgeAPI.baseURL).fullURL(method: .individualRegistration)
         var request = URLRequest(url: url)
         
         
@@ -113,17 +114,18 @@ class IndividualPost {
     
     func processPostRegister(data: Data, error: Swift.Error?) -> IndividualPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            
+            if object["errorInfomation"] as? String == "Invalid email or password" {
+                return .failureLogin(object["errorInfomation"] as! String)
+            } else {
                 if let individualDict = Individual.init(jsonObject: (object["individual"] as! [String: Any])) {
                     return .success(individualDict)
-                } else {
-                    return .failureLogin(object["errorInfomation"] as! String)
+                }
             }
         }
         return .failure(.system(error!))
     }
     
-    func postEditProfile(firstName: String, lastName: String, email: String, userId: Int, completion: @escaping (IndividualPostResult) -> ()) {
+    func postEditProfile(firstName: String, lastName: String, email: String, userId: String, completion: @escaping (IndividualPostResult) -> ()) {
         
         let session = URLSession.shared
         //Need URL String*********************************************
@@ -137,7 +139,7 @@ class IndividualPost {
         
         
         
-        let payload = try! JSONSerialization.data(withJSONObject: ["firstName": firstName, "lastName": lastName, "email": email, "userId": userId], options: [])
+        let payload = try! JSONSerialization.data(withJSONObject: ["firstName": firstName, "lastName": lastName, "email": email, "id": userId], options: [])
         request.httpBody = payload
         
         let task = session.dataTask(with: request) { (optionalData, optionalResponse, optionalError) in
@@ -163,14 +165,15 @@ class IndividualPost {
     
     func processPostProfile(data: Data, error: Swift.Error?) -> IndividualPostResult {
         if let object = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
-            
+            if object["errorInfomation"] as? String == "Invalid email or password" {
+                return .failureLogin(object["errorInfomation"] as! String)
+            } else {
                 if let individualDict = Individual.init(jsonObject: (object["individual"] as! [String: Any])) {
                     return .success(individualDict)
-                } else {
-                    return .failureLogin(object["errorInfomation"] as! String)
                 }
             }
-            return .failure(.system(error!))
+        }
+        return .failure(.system(error!))
     }
         
 }

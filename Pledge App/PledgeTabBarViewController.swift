@@ -15,7 +15,25 @@ class PledgeTabBarViewController: UITabBarController {
         
         UITabBar.appearance().tintColor = UIColor.white
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for:.selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for:.normal)
+        
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.yellow], for:.selected)
+        
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes))
+        
+        
+        leftSwipe.direction = .left
+        
+        
+        view.addGestureRecognizer(leftSwipe)
+        
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes))
+        
+        
+        rightSwipe.direction = .right
+        
+        
+        view.addGestureRecognizer(rightSwipe)
         
     }
     
@@ -24,5 +42,23 @@ class PledgeTabBarViewController: UITabBarController {
         
     }
     
-    
+    func handleSwipes(sender:UISwipeGestureRecognizer) {
+        var selectedIndex: Int = self.selectedIndex {
+            didSet {
+                if selectedIndex >= self.viewControllers!.count {
+                    selectedIndex %= self.viewControllers!.count
+                }
+                while selectedIndex < 0 {
+                    selectedIndex += self.viewControllers!.count
+                }
+            }
+        }
+        if (sender.direction == .left) {
+            self.selectedIndex = selectedIndex + 1
+        }
+        
+        if (sender.direction == .right) {
+            self.selectedIndex = selectedIndex - 1
+        }
+    }
 }

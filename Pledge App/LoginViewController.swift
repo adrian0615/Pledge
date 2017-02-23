@@ -82,6 +82,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         navigationController?.navigationBar.isHidden = true
         
+        navigationController?.navigationBar.tintColor = UIColor.white
+        
     }
     
     func yesOrganization(action: UIAlertAction!) {
@@ -101,7 +103,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     UserDefaults.standard.set(email, forKey: "email")
                     UserDefaults.standard.set(password, forKey: "password")
                     UserDefaults.standard.set(self.organization?.userId, forKey: "userId")
-                    UserDefaults.standard.set(self.organization?.hostId, forKey: "hostId")
+                    UserDefaults.standard.set(self.organization?.userId, forKey: "hostId")
                     UserDefaults.standard.set(self.organization?.name, forKey: "name")
                     UserDefaults.standard.set(self.organization?.address, forKey: "address")
                     UserDefaults.standard.set(self.organization?.city, forKey: "city")
@@ -155,7 +157,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     UserDefaults.standard.set(email, forKey: "email")
                     UserDefaults.standard.set(password, forKey: "password")
                     UserDefaults.standard.set(self.individual?.userId, forKey: "userId")
-                    UserDefaults.standard.set(self.individual?.hostId, forKey: "hostId")
+                    UserDefaults.standard.set(self.individual?.userId, forKey: "hostId")
                     UserDefaults.standard.set(self.individual?.firstName, forKey: "firstName")
                     UserDefaults.standard.set(self.individual?.lastName, forKey: "lastName")
                     UserDefaults.standard.set(true, forKey: "isUserLoggedIn")

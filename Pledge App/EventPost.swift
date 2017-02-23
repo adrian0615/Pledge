@@ -22,7 +22,7 @@ class EventPost {
         case system(Swift.Error)
     }
     
-    func postRSVP(userId: Int, eventId: Int, completion: @escaping (EventPostResult) -> ()) {
+    func postRSVP(userId: String, eventId: String, completion: @escaping (EventPostResult) -> ()) {
         
         let session = URLSession.shared
         
@@ -60,7 +60,7 @@ class EventPost {
         task.resume()
     }
     
-    func postMyEvents(userId: Int, completion: @escaping (EventPostResult) -> ()) {
+    func postMyEvents(userId: String, completion: @escaping (EventPostResult) -> ()) {
         
         let session = URLSession.shared
         
@@ -99,7 +99,7 @@ class EventPost {
     }
     
     
-    func postCreateEvent(name: String, type: String, host: String, userId: Int, hostId: Int, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, completion: @escaping (EventPostResult) -> ()) {
+    func postCreateEvent(name: String, type: String, host: String, userId: String, hostId: String, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, completion: @escaping (EventPostResult) -> ()) {
         
         let session = URLSession.shared
         
@@ -115,7 +115,7 @@ class EventPost {
         
         let payload = try! JSONSerialization.data(withJSONObject: ["name": name, "type": type, "host": host, "hostId": hostId, "userId": userId, "location": location, "address": address, "city": city, "state": state, "zip": zip, "startTime": startTime, "endTime": endTime, "details": details], options: [])
         request.httpBody = payload
-        
+        print(payload)
         let task = session.dataTask(with: request) { (optionalData, optionalResponse, optionalError) in
             
             if let data = optionalData {
@@ -137,7 +137,7 @@ class EventPost {
         task.resume()
     }
     
-    func postEditEvent(name: String, type: String, host: String, userId: Int, hostId: Int, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, eventId: Int, completion: @escaping (EventPostResult) -> ()) {
+    func postEditEvent(name: String, type: String, host: String, userId: String, hostId: String, location: String, address: String, city: String, state: String, zip: Int, startTime: TimeInterval, endTime: TimeInterval, details: String, eventId: String, completion: @escaping (EventPostResult) -> ()) {
         
         let session = URLSession.shared
         
@@ -151,7 +151,7 @@ class EventPost {
         
         
         
-        let payload = try! JSONSerialization.data(withJSONObject: ["name": name, "type": type, "host": host, "hostId": hostId, "userId": userId, "location": location, "address": address, "city": city, "state": state, "zip": zip, "startTime": startTime, "endTime": endTime, "details": details, "eventId": eventId], options: [])
+        let payload = try! JSONSerialization.data(withJSONObject: ["name": name, "type": type, "host": host, "hostId": hostId, "userId": userId, "location": location, "address": address, "city": city, "state": state, "zip": zip, "startTime": startTime, "endTime": endTime, "details": details, "id": eventId], options: [])
         request.httpBody = payload
         
         let task = session.dataTask(with: request) { (optionalData, optionalResponse, optionalError) in
@@ -175,7 +175,7 @@ class EventPost {
         task.resume()
     }
     
-    func postDeleteEvent(userId: Int, eventId: Int, completion: @escaping (EventPostResult) -> ()) {
+    func postDeleteEvent(userId: String, eventId: String, completion: @escaping (EventPostResult) -> ()) {
         
         let session = URLSession.shared
         
@@ -228,10 +228,7 @@ class EventPost {
     
     
     
-    
-    //Create Event
-    //Edit Event
-    //Delete Event
+  
     
     
 }
