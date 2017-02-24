@@ -17,7 +17,7 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     var eventPost = EventPost()
     
-    let states = ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KY", "KS", "LA", "LV", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "NE", "ND", "NH", "NJ", "NM", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"]
+    let states = ["GA", "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KY", "KS", "LA", "LV", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "NE", "ND", "NH", "NJ", "NM", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"]
     
     let types = ["Event Type", "Arts & Culture", "Activism", "Animal Rights", "Civil Rights", "Community Improvement", "Disaster Relief", "Disability Assistance", "Education", "Elderly Assistance", "Environmental", "Feeding the Less Fortunate", "Housing & Shelter", "Human Rights", "Human Services", "Mental Health", "Public Health", "Public Safety", "Transportation", "Youth Development"]
     
@@ -186,7 +186,7 @@ class AddEventViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let endTimeInterval = endDate.timeIntervalSince1970
         
         if self.state == " " {
-            state = "AK"
+            state = "GA"
         }
         
         if self.type == " " {

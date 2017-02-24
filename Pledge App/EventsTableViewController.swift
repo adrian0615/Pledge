@@ -35,7 +35,7 @@ class EventsTableViewController: UITableViewController {
     
     let eventCellIdentifier = "EventCell"
     
-   
+    
     
     @IBAction func searchBarTapped(_ sender: UIBarButtonItem) {
         let eventSearchVC = self.storyboard!.instantiateViewController(withIdentifier: "EventSearchView") as! EventSearchViewController
@@ -104,9 +104,9 @@ class EventsTableViewController: UITableViewController {
         eventStore.fetchUpcomingEvents { result in
             switch result {
             case let .success(array) :
-             OperationQueue.main.addOperation {
-                self.events = array
-                return
+                OperationQueue.main.addOperation {
+                    self.events = array
+                    return
                 }
             case let .failure(error) :
                 print("failed to get events: \(error)")
@@ -120,7 +120,7 @@ class EventsTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
+        
         self.update()
         
         
@@ -146,7 +146,7 @@ class EventsTableViewController: UITableViewController {
         }
         
     }
-  
+    
     
     func displayMyAlertMessage(userMessage: String) {
         
