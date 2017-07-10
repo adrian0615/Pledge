@@ -11,7 +11,7 @@ Instructions - Download the repository from Github and save it to your computer.
 
 
 TESTING
-I focused my testing on making sure I was sending/receiving the right information to/from the server, the orghunter.com API, and the predictHQ.com API.
+I focused my testing on making sure I was sending/receiving the right information to/from the API.
 
 BUILT WITH
 Language(s): Swift 3, JSON
