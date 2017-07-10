@@ -25,7 +25,7 @@ I learned how to ask the user for permissions and work with WebKit
 AUTHOR(S)
 Adrian McDaniel
 
-
+SUPPORT If you have any issues regarding the application. Please contact me at adrianmobiledev@gmail.com
 
 ACKNOWLEDGEMENTS
 Thank you to EventBrite for allowing me to use their data in my pursuit to give back to the community.
